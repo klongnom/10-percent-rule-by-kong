@@ -1102,8 +1102,77 @@ const dashboardTotalPercent =
 if (dashboardTotalPercent) {
     dashboardTotalPercent.textContent =
         (savingPercent + investmentPercent) + "%";
-}}
+}
 
+
+
+// Dashboard Chart
+const chartSaving =
+    document.getElementById("chartSaving");
+
+const chartInvestment =
+    document.getElementById("chartInvestment");
+
+const chartExpense =
+    document.getElementById("chartExpense");
+
+const chartRemain =
+    document.getElementById("chartRemain");
+
+if (totalIncome > 0) {
+
+    const savingWidth =
+        (saving / totalIncome) * 100;
+
+    const investmentWidth =
+        (investment / totalIncome) * 100;
+
+    const expenseWidth =
+        (totalExpense / totalIncome) * 100;
+
+    const remainWidth =
+        Math.max(0, (actualRemain / totalIncome) * 100);
+
+    if (chartSaving) {
+        chartSaving.style.width =
+            savingWidth + "%";
+    }
+
+    if (chartInvestment) {
+        chartInvestment.style.width =
+            investmentWidth + "%";
+    }
+
+    if (chartExpense) {
+        chartExpense.style.width =
+            expenseWidth + "%";
+    }
+
+    if (chartRemain) {
+        chartRemain.style.width =
+            remainWidth + "%";
+    }
+
+} else {
+
+    if (chartSaving) {
+        chartSaving.style.width = "0%";
+    }
+
+    if (chartInvestment) {
+        chartInvestment.style.width = "0%";
+    }
+
+    if (chartExpense) {
+        chartExpense.style.width = "0%";
+    }
+
+    if (chartRemain) {
+        chartRemain.style.width = "0%";
+    }
+}
+
+}
 
 // ===============================
 // บันทึกเงินออมเดือนนี้
