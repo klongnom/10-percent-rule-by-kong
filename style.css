@@ -670,3 +670,131 @@ body {
 .today-btn:active {
     transform: scale(0.98);
 }
+/* =========================
+   Dashboard
+========================= */
+
+.dashboard {
+    margin-bottom: 16px;
+}
+
+
+.dashboard-title {
+    font-size: 18px;
+
+    font-weight: 700;
+
+    margin-bottom: 10px;
+
+    color: #1f2937;
+}
+
+
+/* รายได้ */
+
+.dashboard-income {
+    background: #2e7d32;
+
+    color: white;
+
+    border-radius: 18px;
+
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.07);
+}
+
+
+.dashboard-income span {
+    font-size: 15px;
+}
+
+
+.dashboard-income strong {
+    font-size: 24px;
+}
+
+
+/* Grid */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+
+/* กล่อง */
+
+.dashboard-box {
+    background: #ffffff;
+
+    border-radius: 16px;
+
+    padding: 16px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.07);
+}
+
+
+.dashboard-box span {
+    display: block;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    margin-bottom: 6px;
+}
+
+
+.dashboard-box strong {
+    display: block;
+
+    font-size: 20px;
+
+    color: #2e7d32;
+}
+
+
+/* สรุป */
+
+.dashboard-summary {
+    background: #f1f8f2;
+
+    border-radius: 14px;
+
+    padding: 12px;
+
+    margin-top: 10px;
+
+    text-align: center;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+    line-height: 1.8;
+}
+
+
+.dashboard-summary strong {
+    color: #2e7d32;
+
+    font-size: 15px;
+}
