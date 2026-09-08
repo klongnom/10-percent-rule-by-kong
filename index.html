@@ -74,16 +74,72 @@
         </section>
 
 
-        <!-- เงินใช้ได้ -->
-        <section class="card">
+        <!-- เงินลงทุน -->
+<section class="card investment-card">
 
-            <h2>💵 เงินใช้ได้หลังออม</h2>
+    <h2>📈 เงินลงทุนระยะยาว</h2>
 
-            <p class="money" id="remain">
-                0 บาท
-            </p>
+    <div class="saving-row">
+        <span>อัตราลงทุน</span>
 
-        </section>
+        <strong id="investmentPercent">
+            5%
+        </strong>
+    </div>
+
+    <p class="money" id="investment">
+        0 บาท
+    </p>
+
+    <p class="description">
+        เงินส่วนนี้สำหรับสร้างความมั่งคั่งระยะยาว
+    </p>
+
+</section>
+
+
+<!-- เงินใช้ได้ -->
+<section class="card">
+
+    <h2>💵 เงินใช้ได้หลังออมและลงทุน</h2>
+
+    <p class="money" id="remain">
+        0 บาท
+    </p>
+
+</section>
+
+
+<!-- ปุ่มตั้งค่าเปอร์เซ็นต์ลงทุน -->
+<section class="card">
+
+    <h2>📈 อัตราการลงทุน</h2>
+
+    <div class="percent-buttons">
+
+        <button onclick="setInvestmentPercent(5)">
+            5%
+        </button>
+
+        <button onclick="setInvestmentPercent(10)">
+            10%
+        </button>
+
+        <button onclick="setInvestmentPercent(15)">
+            15%
+        </button>
+
+        <button onclick="setInvestmentPercent(20)">
+            20%
+        </button>
+
+    </div>
+
+    <p class="description">
+        เลือกเปอร์เซ็นต์ที่ต้องการลงทุนระยะยาว
+    </p>
+
+</section>
 
 
         <!-- ปุ่มตั้งค่าเปอร์เซ็นต์ -->
