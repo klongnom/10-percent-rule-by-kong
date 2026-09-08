@@ -1,9 +1,11 @@
 // ===============================
 // 10% Rule by Kong
-// รายได้ + ออม + ลงทุน + เป้าหมาย
+// รายได้ + ออม + ลงทุน + เป้าหมาย + ค่าใช้จ่าย
 // ===============================
 
 let incomes = [];
+
+let expenses = [];
 
 let savingPercent = 10;
 
@@ -28,6 +30,8 @@ document.addEventListener(
 
         renderIncome();
 
+        renderExpenses();
+
         calculate();
 
         updateGoal();
@@ -48,14 +52,11 @@ function addIncome() {
         "ชื่อแหล่งรายได้ เช่น งานร้านอาหาร"
     );
 
-
     if (
         name === null ||
         name.trim() === ""
     ) {
-
         return;
-
     }
 
 
@@ -63,11 +64,8 @@ function addIncome() {
         "จำนวนเงิน เช่น 4500"
     );
 
-
     if (amountText === null) {
-
         return;
-
     }
 
 
@@ -84,7 +82,6 @@ function addIncome() {
         );
 
         return;
-
     }
 
 
@@ -120,6 +117,11 @@ function renderIncome() {
         );
 
 
+    if (!list) {
+        return;
+    }
+
+
     list.innerHTML = "";
 
 
@@ -133,7 +135,6 @@ function renderIncome() {
         `;
 
         return;
-
     }
 
 
@@ -193,9 +194,7 @@ function deleteIncome(id) {
             "ต้องการลบรายได้นี้หรือไม่?"
         )
     ) {
-
         return;
-
     }
 
 
@@ -219,11 +218,211 @@ function deleteIncome(id) {
 
 
 // ===============================
-// คำนวณ
+// เพิ่มค่าใช้จ่าย
+// ===============================
+
+function addExpense() {
+
+    let name = prompt(
+        "รายการค่าใช้จ่าย เช่น ค่าอาหาร"
+    );
+
+
+    if (
+        name === null ||
+        name.trim() === ""
+    ) {
+        return;
+    }
+
+
+    let category = prompt(
+        "หมวดหมู่ เช่น อาหาร / เดินทาง / ช้อปปิ้ง"
+    );
+
+
+    if (
+        category === null ||
+        category.trim() === ""
+    ) {
+        return;
+    }
+
+
+    let amountText = prompt(
+        "จำนวนเงิน เช่น 100"
+    );
+
+
+    if (amountText === null) {
+        return;
+    }
+
+
+    let amount = Number(amountText);
+
+
+    if (
+        isNaN(amount) ||
+        amount <= 0
+    ) {
+
+        alert(
+            "กรุณาใส่จำนวนเงินให้ถูกต้อง"
+        );
+
+        return;
+    }
+
+
+    expenses.push({
+
+        id: Date.now(),
+
+        name: name.trim(),
+
+        category: category.trim(),
+
+        amount: amount
+
+    });
+
+
+    saveData();
+
+    renderExpenses();
+
+    calculate();
+
+}
+
+
+// ===============================
+// แสดงค่าใช้จ่าย
+// ===============================
+
+function renderExpenses() {
+
+    const list =
+        document.getElementById(
+            "expenseList"
+        );
+
+
+    if (!list) {
+        return;
+    }
+
+
+    list.innerHTML = "";
+
+
+    if (expenses.length === 0) {
+
+        list.innerHTML = `
+            <p class="description">
+                ยังไม่มีค่าใช้จ่าย
+            </p>
+        `;
+
+        return;
+    }
+
+
+    expenses.forEach(
+        function (expense) {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "expense-item";
+
+
+            item.innerHTML = `
+
+                <div class="expense-info">
+
+                    <div class="expense-name">
+                        ${escapeHTML(expense.name)}
+                    </div>
+
+                    <div class="expense-category">
+                        ${escapeHTML(expense.category)}
+                    </div>
+
+                </div>
+
+                <div class="expense-right">
+
+                    <strong>
+                        -${formatMoney(expense.amount)}
+                    </strong>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteExpense(${expense.id})"
+                    >
+                        ลบ
+                    </button>
+
+                </div>
+
+            `;
+
+
+            list.appendChild(item);
+
+        }
+    );
+
+}
+
+
+// ===============================
+// ลบค่าใช้จ่าย
+// ===============================
+
+function deleteExpense(id) {
+
+    if (
+        !confirm(
+            "ต้องการลบค่าใช้จ่ายนี้หรือไม่?"
+        )
+    ) {
+        return;
+    }
+
+
+    expenses =
+        expenses.filter(
+            function (expense) {
+
+                return expense.id !== id;
+
+            }
+        );
+
+
+    saveData();
+
+    renderExpenses();
+
+    calculate();
+
+}
+
+
+// ===============================
+// คำนวณทั้งหมด
 // ===============================
 
 function calculate() {
 
+    // รายได้รวม
     let totalIncome =
         incomes.reduce(
             function (
@@ -241,58 +440,216 @@ function calculate() {
         );
 
 
+    // ค่าใช้จ่ายจริง
+    let totalExpense =
+        expenses.reduce(
+            function (
+                total,
+                expense
+            ) {
+
+                return (
+                    total +
+                    expense.amount
+                );
+
+            },
+            0
+        );
+
+
+    // เงินออม
     let saving =
         totalIncome *
         savingPercent /
         100;
 
 
+    // เงินลงทุน
     let investment =
         totalIncome *
         investmentPercent /
         100;
 
 
-    let remain =
+    // เงินที่ควรใช้
+    let plannedRemain =
         totalIncome -
         saving -
         investment;
 
 
-    document.getElementById(
-        "income"
-    ).textContent =
-        formatMoney(totalIncome);
+    // เงินคงเหลือจริง
+    let actualRemain =
+        plannedRemain -
+        totalExpense;
 
 
-    document.getElementById(
-        "savingPercent"
-    ).textContent =
-        savingPercent + "%";
+    // =========================
+    // แสดงรายได้
+    // =========================
+
+    const incomeElement =
+        document.getElementById(
+            "income"
+        );
+
+    if (incomeElement) {
+
+        incomeElement.textContent =
+            formatMoney(totalIncome);
+
+    }
 
 
-    document.getElementById(
-        "saving"
-    ).textContent =
-        formatMoney(saving);
+    // =========================
+    // เงินออม
+    // =========================
+
+    const savingPercentElement =
+        document.getElementById(
+            "savingPercent"
+        );
+
+    const savingElement =
+        document.getElementById(
+            "saving"
+        );
 
 
-    document.getElementById(
-        "investmentPercent"
-    ).textContent =
-        investmentPercent + "%";
+    if (savingPercentElement) {
+
+        savingPercentElement.textContent =
+            savingPercent + "%";
+
+    }
 
 
-    document.getElementById(
-        "investment"
-    ).textContent =
-        formatMoney(investment);
+    if (savingElement) {
+
+        savingElement.textContent =
+            formatMoney(saving);
+
+    }
 
 
-    document.getElementById(
-        "remain"
-    ).textContent =
-        formatMoney(remain);
+    // =========================
+    // เงินลงทุน
+    // =========================
+
+    const investmentPercentElement =
+        document.getElementById(
+            "investmentPercent"
+        );
+
+    const investmentElement =
+        document.getElementById(
+            "investment"
+        );
+
+
+    if (investmentPercentElement) {
+
+        investmentPercentElement.textContent =
+            investmentPercent + "%";
+
+    }
+
+
+    if (investmentElement) {
+
+        investmentElement.textContent =
+            formatMoney(investment);
+
+    }
+
+
+    // =========================
+    // เงินควรใช้
+    // =========================
+
+    const remainElement =
+        document.getElementById(
+            "remain"
+        );
+
+
+    if (remainElement) {
+
+        remainElement.textContent =
+            formatMoney(plannedRemain);
+
+    }
+
+
+    // =========================
+    // ค่าใช้จ่าย
+    // =========================
+
+    const expenseElement =
+        document.getElementById(
+            "totalExpense"
+        );
+
+
+    if (expenseElement) {
+
+        expenseElement.textContent =
+            formatMoney(totalExpense);
+
+    }
+
+
+    // =========================
+    // เงินเหลือจริง
+    // =========================
+
+    const actualRemainElement =
+        document.getElementById(
+            "actualRemain"
+        );
+
+
+    if (actualRemainElement) {
+
+        actualRemainElement.textContent =
+            formatMoney(actualRemain);
+
+    }
+
+
+    // =========================
+    // สถานะงบ
+    // =========================
+
+    const budgetMessage =
+        document.getElementById(
+            "budgetMessage"
+        );
+
+
+    if (budgetMessage) {
+
+        if (totalExpense > plannedRemain) {
+
+            budgetMessage.textContent =
+                "⚠️ ค่าใช้จ่ายเกินเงินที่วางแผนไว้";
+
+        }
+        else {
+
+            let left =
+                plannedRemain -
+                totalExpense;
+
+
+            budgetMessage.textContent =
+                "เหลืองบอีก " +
+                formatMoney(left);
+
+        }
+
+    }
 
 }
 
@@ -330,7 +687,6 @@ function saveThisMonth() {
         );
 
         return;
-
     }
 
 
@@ -343,8 +699,6 @@ function saveThisMonth() {
             }
         );
 
-
-    // ป้องกันการบันทึกเดือนเดิมซ้ำ
 
     let alreadySaved =
         savingHistory.some(
@@ -363,7 +717,6 @@ function saveThisMonth() {
         );
 
         return;
-
     }
 
 
@@ -398,7 +751,7 @@ function saveThisMonth() {
 
 
 // ===============================
-// แสดงประวัติการออม
+// ประวัติการออม
 // ===============================
 
 function renderHistory() {
@@ -410,9 +763,7 @@ function renderHistory() {
 
 
     if (!list) {
-
         return;
-
     }
 
 
@@ -430,7 +781,6 @@ function renderHistory() {
         `;
 
         return;
-
     }
 
 
@@ -519,9 +869,7 @@ function setSavingGoal() {
 
 
     if (goalText === null) {
-
         return;
-
     }
 
 
@@ -539,7 +887,6 @@ function setSavingGoal() {
         );
 
         return;
-
     }
 
 
@@ -565,9 +912,7 @@ function updateGoal() {
 
 
     if (!goalElement) {
-
         return;
-
     }
 
 
@@ -667,6 +1012,14 @@ function saveData() {
 
 
     localStorage.setItem(
+        "kongExpenses",
+        JSON.stringify(
+            expenses
+        )
+    );
+
+
+    localStorage.setItem(
         "kongSavingPercent",
         savingPercent
     );
@@ -709,6 +1062,12 @@ function loadData() {
     const savedIncomes =
         localStorage.getItem(
             "kongIncomes"
+        );
+
+
+    const savedExpenses =
+        localStorage.getItem(
+            "kongExpenses"
         );
 
 
@@ -755,6 +1114,25 @@ function loadData() {
         catch (error) {
 
             incomes = [];
+
+        }
+
+    }
+
+
+    if (savedExpenses) {
+
+        try {
+
+            expenses =
+                JSON.parse(
+                    savedExpenses
+                );
+
+        }
+        catch (error) {
+
+            expenses = [];
 
         }
 
@@ -831,7 +1209,7 @@ function loadData() {
 
 
 // ===============================
-// จัดรูปแบบเงิน
+// รูปแบบเงิน
 // ===============================
 
 function formatMoney(number) {
