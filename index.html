@@ -25,8 +25,6 @@
 <div class="app">
 
 
-    <!-- Header -->
-
     <header class="header">
 
         <h1>🌱 10% Rule</h1>
@@ -47,7 +45,9 @@
 
         <section class="card total-card">
 
-            <h2>💰 รายได้เดือนนี้</h2>
+            <h2>
+                💰 รายได้เดือนนี้
+            </h2>
 
             <p
                 class="money"
@@ -65,7 +65,9 @@
 
             <div class="section-title">
 
-                <h2>💼 รายได้ของฉัน</h2>
+                <h2>
+                    💼 รายได้ของฉัน
+                </h2>
 
                 <button
                     class="add-btn"
@@ -86,7 +88,10 @@
 
         <section class="card saving-card">
 
-            <h2>🌱 ออมก่อนจ่าย</h2>
+            <h2>
+                🌱 ออมก่อนจ่าย
+            </h2>
+
 
             <div class="saving-row">
 
@@ -109,14 +114,6 @@
             </p>
 
 
-            <p class="description">
-
-                เงินจำนวนนี้ควรถูกแยกออก
-                ก่อนนำเงินไปใช้จ่าย
-
-            </p>
-
-
             <button
                 class="save-month-btn"
                 onclick="saveThisMonth()"
@@ -127,7 +124,7 @@
         </section>
 
 
-        <!-- เป้าหมายเงินก้อน -->
+        <!-- เป้าหมาย -->
 
         <section class="card goal-card">
 
@@ -200,7 +197,7 @@
                 class="description"
                 id="goalMessage"
             >
-                เริ่มต้นสร้างเงินก้อนแรกของคุณ
+                เริ่มต้นสร้างเงินก้อนแรก
             </p>
 
         </section>
@@ -214,14 +211,7 @@
                 📅 ประวัติการออม
             </h2>
 
-
-            <div id="savingHistory">
-
-                <p class="description">
-                    ยังไม่มีประวัติการออม
-                </p>
-
-            </div>
+            <div id="savingHistory"></div>
 
         </section>
 
@@ -255,11 +245,6 @@
 
             </div>
 
-
-            <p class="description">
-                เลือกเปอร์เซ็นต์ที่ต้องการออม
-            </p>
-
         </section>
 
 
@@ -290,14 +275,6 @@
                 id="investment"
             >
                 0 บาท
-            </p>
-
-
-            <p class="description">
-
-                เงินส่วนนี้สำหรับสร้าง
-                ความมั่งคั่งระยะยาว
-
             </p>
 
         </section>
@@ -343,12 +320,12 @@
         </section>
 
 
-        <!-- เงินใช้ได้ -->
+        <!-- เงินใช้ -->
 
         <section class="card">
 
             <h2>
-                💵 เงินใช้ได้
+                💵 เงินที่วางแผนให้ใช้
             </h2>
 
 
@@ -359,11 +336,71 @@
                 0 บาท
             </p>
 
+        </section>
+
+
+        <!-- ค่าใช้จ่าย -->
+
+        <section class="card expense-card">
+
+            <div class="section-title">
+
+                <h2>
+                    🧾 ค่าใช้จ่ายเดือนนี้
+                </h2>
+
+                <button
+                    class="add-btn"
+                    onclick="addExpense()"
+                >
+                    ＋ เพิ่ม
+                </button>
+
+            </div>
+
+
+            <p
+                class="money expense-total"
+                id="totalExpense"
+            >
+                0 บาท
+            </p>
+
+
+            <div id="expenseList"></div>
+
+
+            <p
+                class="description"
+                id="budgetMessage"
+            >
+                ยังไม่มีค่าใช้จ่าย
+            </p>
+
+        </section>
+
+
+        <!-- เงินเหลือจริง -->
+
+        <section class="card actual-card">
+
+            <h2>
+                💳 เงินเหลือจริง
+            </h2>
+
+
+            <p
+                class="money"
+                id="actualRemain"
+            >
+                0 บาท
+            </p>
+
 
             <p class="description">
 
                 เงินที่เหลือหลังหัก
-                เงินออมและเงินลงทุน
+                ค่าใช้จ่ายจริง
 
             </p>
 
