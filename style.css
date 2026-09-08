@@ -1,3 +1,8 @@
+/* =========================
+   10% Rule by Kong
+   Mobile First
+========================= */
+
 * {
     box-sizing: border-box;
 }
@@ -5,21 +10,24 @@
 body {
     margin: 0;
     font-family: Arial, "Noto Sans Thai", sans-serif;
-    background: #e8f5e9;
-    color: #1b1b1b;
+    background: #eef7f0;
+    color: #1f2937;
 }
 
 .app {
     width: 100%;
-    max-width: 500px;
+    max-width: 520px;
     margin: 0 auto;
-    padding: 24px 18px 40px;
+    padding: 20px 16px 40px;
 }
 
-/* Header */
+/* =========================
+   Header
+========================= */
+
 .header {
     text-align: center;
-    margin-bottom: 24px;
+    padding: 10px 0 24px;
 }
 
 .header h1 {
@@ -29,84 +37,248 @@ body {
 }
 
 .header p {
-    margin: 5px 0 0;
-    color: #666;
+    margin: 4px 0;
+    color: #64748b;
+    font-size: 16px;
 }
 
-/* Card */
+.header small {
+    color: #4f6f52;
+}
+
+
+/* =========================
+   Card
+========================= */
+
 .card {
-    background: white;
-    padding: 20px;
-    margin-bottom: 15px;
+    background: #ffffff;
     border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    margin-bottom: 16px;
+
+    box-shadow:
+        0 4px 14px rgba(0, 0, 0, 0.07);
 }
 
 .card h2 {
-    margin: 0 0 10px;
-    font-size: 17px;
-    color: #555;
+    margin: 0 0 14px;
+    font-size: 18px;
 }
+
+
+/* =========================
+   Money
+========================= */
 
 .money {
     margin: 0;
-    color: #2e7d32;
     font-size: 30px;
-    font-weight: bold;
+    font-weight: 700;
+    color: #2e7d32;
 }
 
-/* Main saving card */
+.total-card {
+    border-left: 5px solid #43a047;
+}
+
+
+/* =========================
+   Saving Card
+========================= */
+
 .saving-card {
     background: #2e7d32;
     color: white;
 }
 
-.saving-card h2,
+.saving-card h2 {
+    color: white;
+}
+
 .saving-card .money {
     color: white;
 }
 
-/* Button */
-button {
-    width: 100%;
-    padding: 16px;
+.saving-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 8px;
+}
+
+.saving-row strong {
+    font-size: 20px;
+}
+
+.description {
+    margin: 10px 0 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.saving-card .description {
+    color: #d8ead9;
+}
+
+
+/* =========================
+   Section Title
+========================= */
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+.section-title h2 {
+    margin: 0;
+}
+
+
+/* =========================
+   Add Button
+========================= */
+
+.add-btn {
+    width: auto;
+    padding: 9px 13px;
+
     border: none;
-    border-radius: 15px;
-    background: #43a047;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
+    border-radius: 12px;
+
+    background: #e8f5e9;
+    color: #2e7d32;
+
+    font-size: 14px;
+    font-weight: 700;
+
     cursor: pointer;
 }
 
-button:hover {
-    background: #388e3c;
+.add-btn:active {
+    transform: scale(0.96);
 }
 
-button:active {
-    transform: scale(0.98);
+
+/* =========================
+   Income List
+========================= */
+
+#incomeList {
+    margin-top: 15px;
 }
 
-/* Footer */
+.income-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.income-item:last-child {
+    border-bottom: none;
+}
+
+.income-info {
+    min-width: 0;
+}
+
+.income-name {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.income-amount {
+    margin-top: 4px;
+    color: #2e7d32;
+    font-weight: 700;
+}
+
+.delete-btn {
+    flex-shrink: 0;
+
+    border: none;
+    background: #fef2f2;
+    color: #dc2626;
+
+    width: 36px;
+    height: 36px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+}
+
+
+/* =========================
+   Percent Buttons
+========================= */
+
+.percent-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.percent-buttons button {
+    width: 100%;
+    padding: 12px 5px;
+
+    border: 1px solid #c8e6c9;
+    border-radius: 12px;
+
+    background: #f1f8f2;
+    color: #2e7d32;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.percent-buttons button:active {
+    transform: scale(0.96);
+}
+
+
+/* =========================
+   Footer
+========================= */
+
 .footer {
     text-align: center;
     margin-top: 25px;
-    color: #777;
+
+    color: #718096;
     font-size: 13px;
+    line-height: 1.7;
 }
 
-/* Mobile */
-@media (max-width: 400px) {
+
+/* =========================
+   Larger Screens
+========================= */
+
+@media (min-width: 700px) {
 
     .app {
-        padding: 18px 14px 30px;
+        max-width: 600px;
+        padding-top: 35px;
     }
 
-    .header h1 {
-        font-size: 26px;
+    .card {
+        padding: 24px;
     }
 
-    .money {
-        font-size: 26px;
-    }
 }
