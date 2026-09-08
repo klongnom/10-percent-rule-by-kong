@@ -799,7 +799,7 @@ body {
     font-size: 15px;
 }
 /* =========================
-   Dashboard Chart
+   Dashboard Chart V2
    ========================= */
 
 .dashboard-chart {
@@ -817,19 +817,35 @@ body {
     margin-bottom: 12px;
 }
 
+/* หลอดกราฟ */
+
 .chart-bar {
     width: 100%;
-    height: 24px;
+    height: 28px;
     display: flex;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 14px;
     background: #e2e8f0;
 }
 
 .chart-bar div {
     height: 100%;
+    min-width: 0;
     transition: width .3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
+
+.chart-bar span {
+    font-size: 10px;
+    font-weight: 700;
+    color: #ffffff;
+    white-space: nowrap;
+}
+
+/* สี */
 
 .chart-saving {
     background: #2e7d32;
@@ -847,17 +863,30 @@ body {
     background: #cbd5e1;
 }
 
+/* รายละเอียดใต้กราฟ */
+
 .chart-legend {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
     margin-top: 12px;
-    font-size: 12px;
-    color: #64748b;
+}
+
+.chart-legend div {
+    background: #f8fafc;
+    padding: 9px 10px;
+    border-radius: 9px;
 }
 
 .chart-legend span {
-    background: #f8fafc;
-    padding: 7px 8px;
-    border-radius: 8px;
+    display: block;
+    color: #64748b;
+    font-size: 12px;
+    margin-bottom: 3px;
+}
+
+.chart-legend strong {
+    display: block;
+    color: #334155;
+    font-size: 13px;
 }
