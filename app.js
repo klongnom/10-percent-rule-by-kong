@@ -1,6 +1,12 @@
 // ===============================
 // 10% Rule by Kong
-// รายได้ + ออม + ลงทุน + เป้าหมาย + ค่าใช้จ่าย
+// ระบบจัดการเงินแบบแยกเดือน
+// รายได้ + ออม + ลงทุน + ค่าใช้จ่าย + เป้าหมาย
+// ===============================
+
+
+// ===============================
+// ข้อมูลหลัก
 // ===============================
 
 let incomes = [];
@@ -18,6 +24,27 @@ let savedAmount = 0;
 let savingHistory = [];
 
 
+// เดือนที่กำลังดู
+let currentMonth = getCurrentMonth();
+
+
+// ===============================
+// หมวดค่าใช้จ่าย
+// ===============================
+
+const expenseCategories = [
+    "🍜 อาหาร",
+    "🛵 เดินทาง",
+    "🏠 ที่พัก",
+    "📱 โทรศัพท์/อินเทอร์เน็ต",
+    "📚 การศึกษา/พัฒนาตัวเอง",
+    "🛍️ ช้อปปิ้ง",
+    "🎮 ความบันเทิง",
+    "🤝 ช่วยเหลือผู้อื่น",
+    "📦 อื่น ๆ"
+];
+
+
 // ===============================
 // เริ่มระบบ
 // ===============================
@@ -27,6 +54,8 @@ document.addEventListener(
     function () {
 
         loadData();
+
+        renderMonth();
 
         renderIncome();
 
@@ -43,14 +72,223 @@ document.addEventListener(
 
 
 // ===============================
+// ระบบเดือน
+// ===============================
+
+// คืนค่าเดือนปัจจุบัน เช่น
+// 2026-09
+
+function getCurrentMonth() {
+
+    const date = new Date();
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(
+            date.getMonth() + 1
+        ).padStart(2, "0");
+
+    return (
+        year +
+        "-" +
+        month
+    );
+
+}
+
+
+// ===============================
+// แปลงเดือนเป็นภาษาไทย
+// ===============================
+
+function formatMonth(monthString) {
+
+    const parts =
+        monthString.split("-");
+
+    const year =
+        Number(parts[0]);
+
+    const month =
+        Number(parts[1]);
+
+
+    const date =
+        new Date(
+            year,
+            month - 1,
+            1
+        );
+
+
+    return date.toLocaleDateString(
+        "th-TH",
+        {
+            month: "long",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+// ===============================
+// แสดงเดือน
+// ===============================
+
+function renderMonth() {
+
+    const element =
+        document.getElementById(
+            "currentMonth"
+        );
+
+
+    if (!element) {
+        return;
+    }
+
+
+    element.textContent =
+        formatMonth(
+            currentMonth
+        );
+
+}
+
+
+// ===============================
+// เดือนก่อนหน้า
+// ===============================
+
+function previousMonth() {
+
+    const parts =
+        currentMonth.split("-");
+
+
+    let year =
+        Number(parts[0]);
+
+    let month =
+        Number(parts[1]);
+
+
+    month--;
+
+
+    if (month === 0) {
+
+        month = 12;
+
+        year--;
+
+    }
+
+
+    currentMonth =
+        year +
+        "-" +
+        String(month).padStart(
+            2,
+            "0"
+        );
+
+
+    renderMonth();
+
+    renderIncome();
+
+    renderExpenses();
+
+    calculate();
+
+}
+
+
+// ===============================
+// เดือนถัดไป
+// ===============================
+
+function nextMonth() {
+
+    const parts =
+        currentMonth.split("-");
+
+
+    let year =
+        Number(parts[0]);
+
+    let month =
+        Number(parts[1]);
+
+
+    month++;
+
+
+    if (month === 13) {
+
+        month = 1;
+
+        year++;
+
+    }
+
+
+    currentMonth =
+        year +
+        "-" +
+        String(month).padStart(
+            2,
+            "0"
+        );
+
+
+    renderMonth();
+
+    renderIncome();
+
+    renderExpenses();
+
+    calculate();
+
+}
+
+
+// ===============================
+// กลับเดือนปัจจุบัน
+// ===============================
+
+function goToCurrentMonth() {
+
+    currentMonth =
+        getCurrentMonth();
+
+
+    renderMonth();
+
+    renderIncome();
+
+    renderExpenses();
+
+    calculate();
+
+}
+
+
+// ===============================
 // เพิ่มรายได้
 // ===============================
 
 function addIncome() {
 
-    let name = prompt(
-        "ชื่อแหล่งรายได้ เช่น งานร้านอาหาร"
-    );
+    let name =
+        prompt(
+            "ชื่อแหล่งรายได้ เช่น งานร้านอาหาร"
+        );
+
 
     if (
         name === null ||
@@ -60,16 +298,19 @@ function addIncome() {
     }
 
 
-    let amountText = prompt(
-        "จำนวนเงิน เช่น 4500"
-    );
+    let amountText =
+        prompt(
+            "จำนวนเงิน เช่น 4500"
+        );
+
 
     if (amountText === null) {
         return;
     }
 
 
-    let amount = Number(amountText);
+    let amount =
+        Number(amountText);
 
 
     if (
@@ -89,9 +330,14 @@ function addIncome() {
 
         id: Date.now(),
 
-        name: name.trim(),
+        name:
+            name.trim(),
 
-        amount: amount
+        amount:
+            amount,
+
+        month:
+            currentMonth
 
     });
 
@@ -125,11 +371,26 @@ function renderIncome() {
     list.innerHTML = "";
 
 
-    if (incomes.length === 0) {
+    const monthIncomes =
+        incomes.filter(
+            function (income) {
+
+                return (
+                    income.month ===
+                    currentMonth
+                );
+
+            }
+        );
+
+
+    if (
+        monthIncomes.length === 0
+    ) {
 
         list.innerHTML = `
             <p class="description">
-                ยังไม่มีรายได้<br>
+                ยังไม่มีรายได้เดือนนี้<br>
                 กด ＋ เพิ่ม เพื่อเพิ่มรายได้
             </p>
         `;
@@ -138,7 +399,7 @@ function renderIncome() {
     }
 
 
-    incomes.forEach(
+    monthIncomes.forEach(
         function (income) {
 
             const item =
@@ -223,9 +484,10 @@ function deleteIncome(id) {
 
 function addExpense() {
 
-    let name = prompt(
-        "รายการค่าใช้จ่าย เช่น ค่าอาหาร"
-    );
+    let name =
+        prompt(
+            "รายการค่าใช้จ่าย เช่น หนังสือ"
+        );
 
 
     if (
@@ -236,22 +498,67 @@ function addExpense() {
     }
 
 
-    let category = prompt(
-        "หมวดหมู่ เช่น อาหาร / เดินทาง / ช้อปปิ้ง"
+    let categoryText =
+        "เลือกหมวดหมู่โดยพิมพ์หมายเลข\n\n";
+
+
+    expenseCategories.forEach(
+        function (category, index) {
+
+            categoryText +=
+                (index + 1) +
+                ". " +
+                category +
+                "\n";
+
+        }
     );
 
 
-    if (
-        category === null ||
-        category.trim() === ""
-    ) {
+    let categoryNumber =
+        prompt(
+            categoryText
+        );
+
+
+    if (categoryNumber === null) {
         return;
     }
 
 
-    let amountText = prompt(
-        "จำนวนเงิน เช่น 100"
-    );
+    let categoryIndex =
+        Number(categoryNumber) - 1;
+
+
+    let category;
+
+
+    if (
+        categoryIndex >= 0 &&
+        categoryIndex <
+            expenseCategories.length
+    ) {
+
+        category =
+            expenseCategories[
+                categoryIndex
+            ];
+
+    }
+    else {
+
+        alert(
+            "เลือกหมวดหมู่ไม่ถูกต้อง"
+        );
+
+        return;
+    }
+
+
+    let amountText =
+        prompt(
+            "จำนวนเงิน เช่น 100"
+        );
 
 
     if (amountText === null) {
@@ -259,7 +566,8 @@ function addExpense() {
     }
 
 
-    let amount = Number(amountText);
+    let amount =
+        Number(amountText);
 
 
     if (
@@ -279,11 +587,17 @@ function addExpense() {
 
         id: Date.now(),
 
-        name: name.trim(),
+        name:
+            name.trim(),
 
-        category: category.trim(),
+        category:
+            category,
 
-        amount: amount
+        amount:
+            amount,
+
+        month:
+            currentMonth
 
     });
 
@@ -317,11 +631,26 @@ function renderExpenses() {
     list.innerHTML = "";
 
 
-    if (expenses.length === 0) {
+    const monthExpenses =
+        expenses.filter(
+            function (expense) {
+
+                return (
+                    expense.month ===
+                    currentMonth
+                );
+
+            }
+        );
+
+
+    if (
+        monthExpenses.length === 0
+    ) {
 
         list.innerHTML = `
             <p class="description">
-                ยังไม่มีค่าใช้จ่าย
+                ยังไม่มีค่าใช้จ่ายเดือนนี้
             </p>
         `;
 
@@ -329,7 +658,7 @@ function renderExpenses() {
     }
 
 
-    expenses.forEach(
+    monthExpenses.forEach(
         function (expense) {
 
             const item =
@@ -417,14 +746,41 @@ function deleteExpense(id) {
 
 
 // ===============================
-// คำนวณทั้งหมด
+// คำนวณเดือนปัจจุบัน
 // ===============================
 
 function calculate() {
 
+    const monthIncomes =
+        incomes.filter(
+            function (income) {
+
+                return (
+                    income.month ===
+                    currentMonth
+                );
+
+            }
+        );
+
+
+    const monthExpenses =
+        expenses.filter(
+            function (expense) {
+
+                return (
+                    expense.month ===
+                    currentMonth
+                );
+
+            }
+        );
+
+
     // รายได้รวม
+
     let totalIncome =
-        incomes.reduce(
+        monthIncomes.reduce(
             function (
                 total,
                 income
@@ -440,9 +796,10 @@ function calculate() {
         );
 
 
-    // ค่าใช้จ่ายจริง
+    // ค่าใช้จ่ายรวม
+
     let totalExpense =
-        expenses.reduce(
+        monthExpenses.reduce(
             function (
                 total,
                 expense
@@ -459,6 +816,7 @@ function calculate() {
 
 
     // เงินออม
+
     let saving =
         totalIncome *
         savingPercent /
@@ -466,27 +824,30 @@ function calculate() {
 
 
     // เงินลงทุน
+
     let investment =
         totalIncome *
         investmentPercent /
         100;
 
 
-    // เงินที่ควรใช้
+    // เงินที่วางแผนให้ใช้
+
     let plannedRemain =
         totalIncome -
         saving -
         investment;
 
 
-    // เงินคงเหลือจริง
+    // เงินเหลือจริง
+
     let actualRemain =
         plannedRemain -
         totalExpense;
 
 
     // =========================
-    // แสดงรายได้
+    // รายได้
     // =========================
 
     const incomeElement =
@@ -494,10 +855,13 @@ function calculate() {
             "income"
         );
 
+
     if (incomeElement) {
 
         incomeElement.textContent =
-            formatMoney(totalIncome);
+            formatMoney(
+                totalIncome
+            );
 
     }
 
@@ -511,16 +875,20 @@ function calculate() {
             "savingPercent"
         );
 
+
     const savingElement =
         document.getElementById(
             "saving"
         );
 
 
-    if (savingPercentElement) {
+    if (
+        savingPercentElement
+    ) {
 
         savingPercentElement.textContent =
-            savingPercent + "%";
+            savingPercent +
+            "%";
 
     }
 
@@ -528,7 +896,9 @@ function calculate() {
     if (savingElement) {
 
         savingElement.textContent =
-            formatMoney(saving);
+            formatMoney(
+                saving
+            );
 
     }
 
@@ -542,16 +912,20 @@ function calculate() {
             "investmentPercent"
         );
 
+
     const investmentElement =
         document.getElementById(
             "investment"
         );
 
 
-    if (investmentPercentElement) {
+    if (
+        investmentPercentElement
+    ) {
 
         investmentPercentElement.textContent =
-            investmentPercent + "%";
+            investmentPercent +
+            "%";
 
     }
 
@@ -559,13 +933,15 @@ function calculate() {
     if (investmentElement) {
 
         investmentElement.textContent =
-            formatMoney(investment);
+            formatMoney(
+                investment
+            );
 
     }
 
 
     // =========================
-    // เงินควรใช้
+    // เงินที่วางแผนให้ใช้
     // =========================
 
     const remainElement =
@@ -577,7 +953,9 @@ function calculate() {
     if (remainElement) {
 
         remainElement.textContent =
-            formatMoney(plannedRemain);
+            formatMoney(
+                plannedRemain
+            );
 
     }
 
@@ -595,7 +973,9 @@ function calculate() {
     if (expenseElement) {
 
         expenseElement.textContent =
-            formatMoney(totalExpense);
+            formatMoney(
+                totalExpense
+            );
 
     }
 
@@ -610,10 +990,14 @@ function calculate() {
         );
 
 
-    if (actualRemainElement) {
+    if (
+        actualRemainElement
+    ) {
 
         actualRemainElement.textContent =
-            formatMoney(actualRemain);
+            formatMoney(
+                actualRemain
+            );
 
     }
 
@@ -630,7 +1014,10 @@ function calculate() {
 
     if (budgetMessage) {
 
-        if (totalExpense > plannedRemain) {
+        if (
+            totalExpense >
+            plannedRemain
+        ) {
 
             budgetMessage.textContent =
                 "⚠️ ค่าใช้จ่ายเกินเงินที่วางแผนไว้";
@@ -645,7 +1032,9 @@ function calculate() {
 
             budgetMessage.textContent =
                 "เหลืองบอีก " +
-                formatMoney(left);
+                formatMoney(
+                    left
+                );
 
         }
 
@@ -660,14 +1049,30 @@ function calculate() {
 
 function saveThisMonth() {
 
+    const monthIncomes =
+        incomes.filter(
+            function (income) {
+
+                return (
+                    income.month ===
+                    currentMonth
+                );
+
+            }
+        );
+
+
     let totalIncome =
-        incomes.reduce(
+        monthIncomes.reduce(
             function (
                 total,
                 income
             ) {
 
-                return total + income.amount;
+                return (
+                    total +
+                    income.amount
+                );
 
             },
             0
@@ -690,21 +1095,14 @@ function saveThisMonth() {
     }
 
 
-    let month =
-        new Date().toLocaleDateString(
-            "th-TH",
-            {
-                month: "long",
-                year: "numeric"
-            }
-        );
-
-
     let alreadySaved =
         savingHistory.some(
             function (item) {
 
-                return item.month === month;
+                return (
+                    item.month ===
+                    currentMonth
+                );
 
             }
         );
@@ -727,9 +1125,11 @@ function saveThisMonth() {
 
         id: Date.now(),
 
-        month: month,
+        month:
+            currentMonth,
 
-        amount: saving
+        amount:
+            saving
 
     });
 
@@ -803,9 +1203,11 @@ function renderHistory() {
                 row.innerHTML = `
 
                     <div>
+
                         <strong>
-                            ${escapeHTML(item.month)}
+                            ${formatMonth(item.month)}
                         </strong>
+
                     </div>
 
                     <strong class="history-money">
@@ -829,7 +1231,9 @@ function renderHistory() {
 
 function setPercent(percent) {
 
-    savingPercent = percent;
+    savingPercent =
+        percent;
+
 
     saveData();
 
@@ -848,6 +1252,7 @@ function setInvestmentPercent(
 
     investmentPercent =
         percent;
+
 
     saveData();
 
@@ -890,7 +1295,9 @@ function setSavingGoal() {
     }
 
 
-    savingGoal = goal;
+    savingGoal =
+        goal;
+
 
     saveData();
 
@@ -916,26 +1323,34 @@ function updateGoal() {
     }
 
 
-    document.getElementById(
-        "savingGoal"
-    ).textContent =
+    goalElement.textContent =
         formatMoney(
             savingGoal
         );
 
 
-    document.getElementById(
-        "savedAmount"
-    ).textContent =
-        formatMoney(
-            savedAmount
+    const savedElement =
+        document.getElementById(
+            "savedAmount"
         );
+
+
+    if (savedElement) {
+
+        savedElement.textContent =
+            formatMoney(
+                savedAmount
+            );
+
+    }
 
 
     let percent = 0;
 
 
-    if (savingGoal > 0) {
+    if (
+        savingGoal > 0
+    ) {
 
         percent =
             savedAmount /
@@ -952,16 +1367,34 @@ function updateGoal() {
         );
 
 
-    document.getElementById(
-        "goalPercent"
-    ).textContent =
-        percent.toFixed(1) + "%";
+    const percentElement =
+        document.getElementById(
+            "goalPercent"
+        );
 
 
-    document.getElementById(
-        "progressFill"
-    ).style.width =
-        percent + "%";
+    if (percentElement) {
+
+        percentElement.textContent =
+            percent.toFixed(1) +
+            "%";
+
+    }
+
+
+    const progress =
+        document.getElementById(
+            "progressFill"
+        );
+
+
+    if (progress) {
+
+        progress.style.width =
+            percent +
+            "%";
+
+    }
 
 
     const message =
@@ -970,8 +1403,14 @@ function updateGoal() {
         );
 
 
+    if (!message) {
+        return;
+    }
+
+
     if (
-        savedAmount >= savingGoal
+        savedAmount >=
+        savingGoal
     ) {
 
         message.textContent =
@@ -1101,6 +1540,10 @@ function loadData() {
         );
 
 
+    // =========================
+    // รายได้เดิม
+    // =========================
+
     if (savedIncomes) {
 
         try {
@@ -1119,6 +1562,10 @@ function loadData() {
 
     }
 
+
+    // =========================
+    // ค่าใช้จ่ายเดิม
+    // =========================
 
     if (savedExpenses) {
 
@@ -1139,6 +1586,10 @@ function loadData() {
     }
 
 
+    // =========================
+    // เปอร์เซ็นต์ออม
+    // =========================
+
     if (
         savedPercent !== null
     ) {
@@ -1150,6 +1601,10 @@ function loadData() {
 
     }
 
+
+    // =========================
+    // เปอร์เซ็นต์ลงทุน
+    // =========================
 
     if (
         savedInvestmentPercent !== null
@@ -1163,6 +1618,10 @@ function loadData() {
     }
 
 
+    // =========================
+    // เป้าหมาย
+    // =========================
+
     if (
         savedGoal !== null
     ) {
@@ -1175,6 +1634,10 @@ function loadData() {
     }
 
 
+    // =========================
+    // เงินออมสะสม
+    // =========================
+
     if (
         savedMoney !== null
     ) {
@@ -1186,6 +1649,10 @@ function loadData() {
 
     }
 
+
+    // =========================
+    // ประวัติ
+    // =========================
 
     if (savedHistory) {
 
@@ -1205,6 +1672,93 @@ function loadData() {
 
     }
 
+
+    // =========================
+    // แปลงข้อมูลเก่า
+    // =========================
+    //
+    // ข้อมูลเดิมที่สร้างก่อนระบบเดือน
+    // จะถูกกำหนดให้อยู่เดือนปัจจุบัน
+    //
+    // เพื่อป้องกันข้อมูลหาย
+    // =========================
+
+    let changed = false;
+
+
+    incomes =
+        incomes.map(
+            function (income) {
+
+                if (
+                    !income.month
+                ) {
+
+                    income.month =
+                        currentMonth;
+
+                    changed = true;
+
+                }
+
+                return income;
+
+            }
+        );
+
+
+    expenses =
+        expenses.map(
+            function (expense) {
+
+                if (
+                    !expense.month
+                ) {
+
+                    expense.month =
+                        currentMonth;
+
+                    changed = true;
+
+                }
+
+                return expense;
+
+            }
+        );
+
+
+    // =========================
+    // แปลงประวัติการออมเก่า
+    // =========================
+
+    savingHistory =
+        savingHistory.map(
+            function (item) {
+
+                if (
+                    !item.month
+                ) {
+
+                    item.month =
+                        currentMonth;
+
+                    changed = true;
+
+                }
+
+                return item;
+
+            }
+        );
+
+
+    if (changed) {
+
+        saveData();
+
+    }
+
 }
 
 
@@ -1215,9 +1769,10 @@ function loadData() {
 function formatMoney(number) {
 
     return (
-        number.toLocaleString(
-            "th-TH"
-        ) +
+        Number(number)
+            .toLocaleString(
+                "th-TH"
+            ) +
         " บาท"
     );
 
@@ -1230,7 +1785,7 @@ function formatMoney(number) {
 
 function escapeHTML(text) {
 
-    return text
+    return String(text)
         .replace(
             /&/g,
             "&amp;"
