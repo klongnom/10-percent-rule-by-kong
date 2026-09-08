@@ -1040,7 +1040,69 @@ function calculate() {
 
     }
 
+const dashboardIncome =
+    document.getElementById("dashboardIncome");
+
+if (dashboardIncome) {
+    dashboardIncome.textContent =
+        formatMoney(totalIncome);
 }
+
+const dashboardSaving =
+    document.getElementById("dashboardSaving");
+
+if (dashboardSaving) {
+    dashboardSaving.textContent =
+        formatMoney(saving);
+}
+
+const dashboardInvestment =
+    document.getElementById("dashboardInvestment");
+
+if (dashboardInvestment) {
+    dashboardInvestment.textContent =
+        formatMoney(investment);
+}
+
+const dashboardExpense =
+    document.getElementById("dashboardExpense");
+
+if (dashboardExpense) {
+    dashboardExpense.textContent =
+        formatMoney(totalExpense);
+}
+
+const dashboardRemain =
+    document.getElementById("dashboardRemain");
+
+if (dashboardRemain) {
+    dashboardRemain.textContent =
+        formatMoney(actualRemain);
+}
+
+const dashboardSavingPercent =
+    document.getElementById("dashboardSavingPercent");
+
+if (dashboardSavingPercent) {
+    dashboardSavingPercent.textContent =
+        savingPercent + "%";
+}
+
+const dashboardInvestmentPercent =
+    document.getElementById("dashboardInvestmentPercent");
+
+if (dashboardInvestmentPercent) {
+    dashboardInvestmentPercent.textContent =
+        investmentPercent + "%";
+}
+
+const dashboardTotalPercent =
+    document.getElementById("dashboardTotalPercent");
+
+if (dashboardTotalPercent) {
+    dashboardTotalPercent.textContent =
+        (savingPercent + investmentPercent) + "%";
+}}
 
 
 // ===============================
