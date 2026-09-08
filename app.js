@@ -5,6 +5,7 @@
 
 let incomes = [];
 let savingPercent = 10;
+let investmentPercent = 5;
 
 
 // เริ่มต้นระบบ
