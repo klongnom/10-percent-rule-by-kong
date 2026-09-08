@@ -1,6 +1,6 @@
 // ===============================
 // 10% Rule by Kong
-// ระบบรายได้หลายงาน
+// ระบบรายได้ + เงินออม + เงินลงทุน
 // ===============================
 
 let incomes = [];
@@ -8,11 +8,18 @@ let savingPercent = 10;
 let investmentPercent = 5;
 
 
+// ===============================
 // เริ่มต้นระบบ
+// ===============================
+
 document.addEventListener("DOMContentLoaded", function () {
+
     loadData();
+
     renderIncome();
+
     calculate();
+
 });
 
 
@@ -22,37 +29,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function addIncome() {
 
-    let name = prompt("ชื่อแหล่งรายได้ เช่น งานร้านอาหาร");
+    let name = prompt(
+        "ชื่อแหล่งรายได้ เช่น งานร้านอาหาร"
+    );
 
     if (name === null || name.trim() === "") {
         return;
     }
 
-    let amountText = prompt("จำนวนเงิน เช่น 4500");
+
+    let amountText = prompt(
+        "จำนวนเงิน เช่น 4500"
+    );
 
     if (amountText === null) {
         return;
     }
 
+
     let amount = Number(amountText);
 
+
     if (isNaN(amount) || amount <= 0) {
-        alert("กรุณาใส่จำนวนเงินให้ถูกต้อง");
+
+        alert(
+            "กรุณาใส่จำนวนเงินให้ถูกต้อง"
+        );
+
         return;
     }
 
 
-    // เพิ่มข้อมูล
     incomes.push({
+
         id: Date.now(),
+
         name: name.trim(),
+
         amount: amount
+
     });
 
 
     saveData();
+
     renderIncome();
+
     calculate();
+
 }
 
 
@@ -62,7 +86,9 @@ function addIncome() {
 
 function renderIncome() {
 
-    const list = document.getElementById("incomeList");
+    const list =
+        document.getElementById("incomeList");
+
 
     list.innerHTML = "";
 
@@ -82,11 +108,16 @@ function renderIncome() {
 
     incomes.forEach(function (income) {
 
-        const item = document.createElement("div");
+        const item =
+            document.createElement("div");
 
-        item.className = "income-item";
+
+        item.className =
+            "income-item";
+
 
         item.innerHTML = `
+
             <div class="income-info">
 
                 <div class="income-name">
@@ -99,15 +130,22 @@ function renderIncome() {
 
             </div>
 
+
             <button
                 class="delete-btn"
                 onclick="deleteIncome(${income.id})">
+
                 ลบ
+
             </button>
+
         `;
 
+
         list.appendChild(item);
+
     });
+
 }
 
 
@@ -117,21 +155,31 @@ function renderIncome() {
 
 function deleteIncome(id) {
 
-    const confirmDelete = confirm(
-        "ต้องการลบรายได้นี้หรือไม่?"
-    );
+    const confirmDelete =
+        confirm(
+            "ต้องการลบรายได้นี้หรือไม่?"
+        );
+
 
     if (!confirmDelete) {
         return;
     }
 
-    incomes = incomes.filter(function (income) {
-        return income.id !== id;
-    });
+
+    incomes =
+        incomes.filter(function (income) {
+
+            return income.id !== id;
+
+        });
+
 
     saveData();
+
     renderIncome();
+
     calculate();
+
 }
 
 
@@ -141,41 +189,110 @@ function deleteIncome(id) {
 
 function calculate() {
 
-    let totalIncome = incomes.reduce(
-        function (total, income) {
-            return total + income.amount;
-        },
-        0
-    );
+    // รายได้รวม
+    let totalIncome =
+        incomes.reduce(
+            function (total, income) {
+
+                return total + income.amount;
+
+            },
+            0
+        );
 
 
+    // เงินออม
     let saving =
-        totalIncome * savingPercent / 100;
+        totalIncome *
+        savingPercent /
+        100;
 
 
+    // เงินลงทุน
+    let investment =
+        totalIncome *
+        investmentPercent /
+        100;
+
+
+    // เงินที่เหลือใช้
     let remain =
-        totalIncome - saving;
+        totalIncome -
+        saving -
+        investment;
 
+
+    // =========================
+    // แสดงรายได้
+    // =========================
 
     document.getElementById("income").textContent =
         formatMoney(totalIncome);
 
 
-    document.getElementById("savingPercent").textContent =
+    // =========================
+    // แสดงเงินออม
+    // =========================
+
+    document.getElementById(
+        "savingPercent"
+    ).textContent =
         savingPercent + "%";
 
 
-    document.getElementById("saving").textContent =
+    document.getElementById(
+        "saving"
+    ).textContent =
         formatMoney(saving);
 
 
-    document.getElementById("remain").textContent =
+    // =========================
+    // แสดงเงินลงทุน
+    // =========================
+
+    const investmentElement =
+        document.getElementById(
+            "investment"
+        );
+
+
+    const investmentPercentElement =
+        document.getElementById(
+            "investmentPercent"
+        );
+
+
+    // ป้องกันกรณี HTML ยังไม่ได้อัปเดต
+    if (investmentElement) {
+
+        investmentElement.textContent =
+            formatMoney(investment);
+
+    }
+
+
+    if (investmentPercentElement) {
+
+        investmentPercentElement.textContent =
+            investmentPercent + "%";
+
+    }
+
+
+    // =========================
+    // แสดงเงินใช้ได้
+    // =========================
+
+    document.getElementById(
+        "remain"
+    ).textContent =
         formatMoney(remain);
+
 }
 
 
 // ===============================
-// เปลี่ยนเปอร์เซ็นต์
+// เปลี่ยนเปอร์เซ็นต์เงินออม
 // ===============================
 
 function setPercent(percent) {
@@ -183,12 +300,29 @@ function setPercent(percent) {
     savingPercent = percent;
 
     saveData();
+
     calculate();
+
 }
 
 
 // ===============================
-// บันทึกข้อมูลในเครื่อง
+// เปลี่ยนเปอร์เซ็นต์เงินลงทุน
+// ===============================
+
+function setInvestmentPercent(percent) {
+
+    investmentPercent = percent;
+
+    saveData();
+
+    calculate();
+
+}
+
+
+// ===============================
+// บันทึกข้อมูล
 // ===============================
 
 function saveData() {
@@ -198,10 +332,18 @@ function saveData() {
         JSON.stringify(incomes)
     );
 
+
     localStorage.setItem(
         "kongSavingPercent",
         savingPercent
     );
+
+
+    localStorage.setItem(
+        "kongInvestmentPercent",
+        investmentPercent
+    );
+
 }
 
 
@@ -212,31 +354,60 @@ function saveData() {
 function loadData() {
 
     const savedIncomes =
-        localStorage.getItem("kongIncomes");
+        localStorage.getItem(
+            "kongIncomes"
+        );
+
 
     const savedPercent =
-        localStorage.getItem("kongSavingPercent");
+        localStorage.getItem(
+            "kongSavingPercent"
+        );
 
 
+    const savedInvestmentPercent =
+        localStorage.getItem(
+            "kongInvestmentPercent"
+        );
+
+
+    // โหลดรายได้
     if (savedIncomes) {
 
         try {
 
-            incomes = JSON.parse(savedIncomes);
+            incomes =
+                JSON.parse(savedIncomes);
 
-        } catch (error) {
+        }
+        catch (error) {
 
             incomes = [];
 
         }
+
+    }
+
+
+    // โหลดเปอร์เซ็นต์ออม
+    if (savedPercent !== null) {
+
+        savingPercent =
+            Number(savedPercent);
+
     }
 
 
-    if (savedPercent) {
+    // โหลดเปอร์เซ็นต์ลงทุน
+    if (
+        savedInvestmentPercent !== null
+    ) {
 
-        savingPercent = Number(savedPercent);
+        investmentPercent =
+            Number(savedInvestmentPercent);
 
     }
+
 }
 
 
@@ -246,7 +417,11 @@ function loadData() {
 
 function formatMoney(number) {
 
-    return number.toLocaleString("th-TH") + " บาท";
+    return (
+        number.toLocaleString("th-TH") +
+        " บาท"
+    );
+
 }
 
 
@@ -262,4 +437,5 @@ function escapeHTML(text) {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
 }
