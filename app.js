@@ -1,26 +1,37 @@
 // ===============================
 // 10% Rule by Kong
-// ระบบรายได้ + เงินออม + เงินลงทุน
+// ระบบรายได้ + ออม + ลงทุน + เป้าหมาย
 // ===============================
 
 let incomes = [];
+
 let savingPercent = 10;
+
 let investmentPercent = 5;
 
+let savingGoal = 30000;
+
+let savedAmount = 0;
+
 
 // ===============================
-// เริ่มต้นระบบ
+// เริ่มระบบ
 // ===============================
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    loadData();
+        loadData();
 
-    renderIncome();
+        renderIncome();
 
-    calculate();
+        calculate();
 
-});
+        updateGoal();
+
+    }
+);
 
 
 // ===============================
@@ -33,8 +44,14 @@ function addIncome() {
         "ชื่อแหล่งรายได้ เช่น งานร้านอาหาร"
     );
 
-    if (name === null || name.trim() === "") {
+
+    if (
+        name === null ||
+        name.trim() === ""
+    ) {
+
         return;
+
     }
 
 
@@ -42,21 +59,28 @@ function addIncome() {
         "จำนวนเงิน เช่น 4500"
     );
 
+
     if (amountText === null) {
+
         return;
+
     }
 
 
     let amount = Number(amountText);
 
 
-    if (isNaN(amount) || amount <= 0) {
+    if (
+        isNaN(amount) ||
+        amount <= 0
+    ) {
 
         alert(
             "กรุณาใส่จำนวนเงินให้ถูกต้อง"
         );
 
         return;
+
     }
 
 
@@ -81,13 +105,15 @@ function addIncome() {
 
 
 // ===============================
-// แสดงรายการรายได้
+// แสดงรายได้
 // ===============================
 
 function renderIncome() {
 
     const list =
-        document.getElementById("incomeList");
+        document.getElementById(
+            "incomeList"
+        );
 
 
     list.innerHTML = "";
@@ -103,48 +129,51 @@ function renderIncome() {
         `;
 
         return;
+
     }
 
 
-    incomes.forEach(function (income) {
+    incomes.forEach(
+        function (income) {
 
-        const item =
-            document.createElement("div");
+            const item =
+                document.createElement(
+                    "div"
+                );
 
 
-        item.className =
-            "income-item";
+            item.className =
+                "income-item";
 
 
-        item.innerHTML = `
+            item.innerHTML = `
 
-            <div class="income-info">
+                <div class="income-info">
 
-                <div class="income-name">
-                    ${escapeHTML(income.name)}
+                    <div class="income-name">
+                        ${escapeHTML(income.name)}
+                    </div>
+
+                    <div class="income-amount">
+                        ${formatMoney(income.amount)}
+                    </div>
+
                 </div>
 
-                <div class="income-amount">
-                    ${formatMoney(income.amount)}
-                </div>
+                <button
+                    class="delete-btn"
+                    onclick="deleteIncome(${income.id})"
+                >
+                    ลบ
+                </button>
 
-            </div>
-
-
-            <button
-                class="delete-btn"
-                onclick="deleteIncome(${income.id})">
-
-                ลบ
-
-            </button>
-
-        `;
+            `;
 
 
-        list.appendChild(item);
+            list.appendChild(item);
 
-    });
+        }
+    );
 
 }
 
@@ -155,23 +184,25 @@ function renderIncome() {
 
 function deleteIncome(id) {
 
-    const confirmDelete =
-        confirm(
+    if (
+        !confirm(
             "ต้องการลบรายได้นี้หรือไม่?"
-        );
+        )
+    ) {
 
-
-    if (!confirmDelete) {
         return;
+
     }
 
 
     incomes =
-        incomes.filter(function (income) {
+        incomes.filter(
+            function (income) {
 
-            return income.id !== id;
+                return income.id !== id;
 
-        });
+            }
+        );
 
 
     saveData();
@@ -184,55 +215,53 @@ function deleteIncome(id) {
 
 
 // ===============================
-// คำนวณเงิน
+// คำนวณ
 // ===============================
 
 function calculate() {
 
-    // รายได้รวม
     let totalIncome =
         incomes.reduce(
-            function (total, income) {
+            function (
+                total,
+                income
+            ) {
 
-                return total + income.amount;
+                return (
+                    total +
+                    income.amount
+                );
 
             },
             0
         );
 
 
-    // เงินออม
     let saving =
         totalIncome *
         savingPercent /
         100;
 
 
-    // เงินลงทุน
     let investment =
         totalIncome *
         investmentPercent /
         100;
 
 
-    // เงินที่เหลือใช้
     let remain =
         totalIncome -
         saving -
         investment;
 
 
-    // =========================
-    // แสดงรายได้
-    // =========================
+    document.getElementById(
+        "income"
+    ).textContent =
+        formatMoney(
+            totalIncome
+        );
 
-    document.getElementById("income").textContent =
-        formatMoney(totalIncome);
-
-
-    // =========================
-    // แสดงเงินออม
-    // =========================
 
     document.getElementById(
         "savingPercent"
@@ -243,56 +272,40 @@ function calculate() {
     document.getElementById(
         "saving"
     ).textContent =
-        formatMoney(saving);
-
-
-    // =========================
-    // แสดงเงินลงทุน
-    // =========================
-
-    const investmentElement =
-        document.getElementById(
-            "investment"
+        formatMoney(
+            saving
         );
 
 
-    const investmentPercentElement =
-        document.getElementById(
-            "investmentPercent"
+    document.getElementById(
+        "investmentPercent"
+    ).textContent =
+        investmentPercent + "%";
+
+
+    document.getElementById(
+        "investment"
+    ).textContent =
+        formatMoney(
+            investment
         );
 
-
-    // ป้องกันกรณี HTML ยังไม่ได้อัปเดต
-    if (investmentElement) {
-
-        investmentElement.textContent =
-            formatMoney(investment);
-
-    }
-
-
-    if (investmentPercentElement) {
-
-        investmentPercentElement.textContent =
-            investmentPercent + "%";
-
-    }
-
-
-    // =========================
-    // แสดงเงินใช้ได้
-    // =========================
 
     document.getElementById(
         "remain"
     ).textContent =
-        formatMoney(remain);
+        formatMoney(
+            remain
+        );
+
+
+    updateGoal();
 
 }
 
 
 // ===============================
-// เปลี่ยนเปอร์เซ็นต์เงินออม
+// เปลี่ยนเปอร์เซ็นต์ออม
 // ===============================
 
 function setPercent(percent) {
@@ -307,16 +320,174 @@ function setPercent(percent) {
 
 
 // ===============================
-// เปลี่ยนเปอร์เซ็นต์เงินลงทุน
+// เปลี่ยนเปอร์เซ็นต์ลงทุน
 // ===============================
 
-function setInvestmentPercent(percent) {
+function setInvestmentPercent(
+    percent
+) {
 
-    investmentPercent = percent;
+    investmentPercent =
+        percent;
 
     saveData();
 
     calculate();
+
+}
+
+
+// ===============================
+// ตั้งเป้าหมายเงินก้อน
+// ===============================
+
+function setSavingGoal() {
+
+    let goalText =
+        prompt(
+            "ต้องการเก็บเงินก้อนเท่าไร? เช่น 30000"
+        );
+
+
+    if (goalText === null) {
+
+        return;
+
+    }
+
+
+    let goal =
+        Number(goalText);
+
+
+    if (
+        isNaN(goal) ||
+        goal <= 0
+    ) {
+
+        alert(
+            "กรุณาใส่เป้าหมายให้ถูกต้อง"
+        );
+
+        return;
+
+    }
+
+
+    savingGoal = goal;
+
+    saveData();
+
+    updateGoal();
+
+}
+
+
+// ===============================
+// อัปเดตเป้าหมาย
+// ===============================
+
+function updateGoal() {
+
+    const goalElement =
+        document.getElementById(
+            "savingGoal"
+        );
+
+
+    const savedElement =
+        document.getElementById(
+            "savedAmount"
+        );
+
+
+    const percentElement =
+        document.getElementById(
+            "goalPercent"
+        );
+
+
+    const fillElement =
+        document.getElementById(
+            "progressFill"
+        );
+
+
+    const messageElement =
+        document.getElementById(
+            "goalMessage"
+        );
+
+
+    if (!goalElement) {
+
+        return;
+
+    }
+
+
+    goalElement.textContent =
+        formatMoney(
+            savingGoal
+        );
+
+
+    savedElement.textContent =
+        formatMoney(
+            savedAmount
+        );
+
+
+    let percent =
+        0;
+
+
+    if (savingGoal > 0) {
+
+        percent =
+            savedAmount /
+            savingGoal *
+            100;
+
+    }
+
+
+    percent =
+        Math.min(
+            percent,
+            100
+        );
+
+
+    percentElement.textContent =
+        percent.toFixed(1) + "%";
+
+
+    fillElement.style.width =
+        percent + "%";
+
+
+    if (savedAmount >= savingGoal) {
+
+        messageElement.textContent =
+            "🎉 เป้าหมายเงินก้อนสำเร็จแล้ว!";
+
+    }
+    else {
+
+        let remaining =
+            savingGoal -
+            savedAmount;
+
+
+        messageElement.textContent =
+            "เหลืออีก " +
+            formatMoney(
+                remaining
+            ) +
+            " เพื่อถึงเป้าหมาย";
+
+    }
 
 }
 
@@ -329,7 +500,9 @@ function saveData() {
 
     localStorage.setItem(
         "kongIncomes",
-        JSON.stringify(incomes)
+        JSON.stringify(
+            incomes
+        )
     );
 
 
@@ -342,6 +515,18 @@ function saveData() {
     localStorage.setItem(
         "kongInvestmentPercent",
         investmentPercent
+    );
+
+
+    localStorage.setItem(
+        "kongSavingGoal",
+        savingGoal
+    );
+
+
+    localStorage.setItem(
+        "kongSavedAmount",
+        savedAmount
     );
 
 }
@@ -371,13 +556,26 @@ function loadData() {
         );
 
 
-    // โหลดรายได้
+    const savedGoal =
+        localStorage.getItem(
+            "kongSavingGoal"
+        );
+
+
+    const savedMoney =
+        localStorage.getItem(
+            "kongSavedAmount"
+        );
+
+
     if (savedIncomes) {
 
         try {
 
             incomes =
-                JSON.parse(savedIncomes);
+                JSON.parse(
+                    savedIncomes
+                );
 
         }
         catch (error) {
@@ -389,22 +587,50 @@ function loadData() {
     }
 
 
-    // โหลดเปอร์เซ็นต์ออม
-    if (savedPercent !== null) {
+    if (
+        savedPercent !== null
+    ) {
 
         savingPercent =
-            Number(savedPercent);
+            Number(
+                savedPercent
+            );
 
     }
 
 
-    // โหลดเปอร์เซ็นต์ลงทุน
     if (
         savedInvestmentPercent !== null
     ) {
 
         investmentPercent =
-            Number(savedInvestmentPercent);
+            Number(
+                savedInvestmentPercent
+            );
+
+    }
+
+
+    if (
+        savedGoal !== null
+    ) {
+
+        savingGoal =
+            Number(
+                savedGoal
+            );
+
+    }
+
+
+    if (
+        savedMoney !== null
+    ) {
+
+        savedAmount =
+            Number(
+                savedMoney
+            );
 
     }
 
@@ -412,13 +638,15 @@ function loadData() {
 
 
 // ===============================
-// จัดรูปแบบเงิน
+// รูปแบบเงิน
 // ===============================
 
 function formatMoney(number) {
 
     return (
-        number.toLocaleString("th-TH") +
+        number.toLocaleString(
+            "th-TH"
+        ) +
         " บาท"
     );
 
@@ -432,10 +660,25 @@ function formatMoney(number) {
 function escapeHTML(text) {
 
     return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 
 }
