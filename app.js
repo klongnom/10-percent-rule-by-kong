@@ -1106,7 +1106,8 @@ if (dashboardTotalPercent) {
 
 
 
-// Dashboard Chart
+// Dashboard Chart V2
+
 const chartSaving =
     document.getElementById("chartSaving");
 
@@ -1119,7 +1120,72 @@ const chartExpense =
 const chartRemain =
     document.getElementById("chartRemain");
 
+
+const chartSavingText =
+    document.getElementById("chartSavingText");
+
+const chartInvestmentText =
+    document.getElementById("chartInvestmentText");
+
+const chartExpenseText =
+    document.getElementById("chartExpenseText");
+
+const chartRemainText =
+    document.getElementById("chartRemainText");
+
+
+const chartSavingLegend =
+    document.getElementById("chartSavingLegend");
+
+const chartInvestmentLegend =
+    document.getElementById("chartInvestmentLegend");
+
+const chartExpenseLegend =
+    document.getElementById("chartExpenseLegend");
+
+const chartRemainLegend =
+    document.getElementById("chartRemainLegend");
+
+
 if (totalIncome > 0) {
+
+    /*
+     * เงินที่สามารถนำไปใช้จ่ายได้จริง
+     * หลังหักเงินออมและเงินลงทุน
+     */
+
+    const plannedRemain =
+        Math.max(
+            0,
+            totalIncome - saving - investment
+        );
+
+
+    /*
+     * ป้องกันกราฟใช้จ่ายเกิน 100%
+     */
+
+    const displayExpense =
+        Math.min(
+            Math.max(totalExpense, 0),
+            plannedRemain
+        );
+
+
+    /*
+     * เงินที่เหลือสำหรับแสดงบนกราฟ
+     */
+
+    const displayRemain =
+        Math.max(
+            0,
+            plannedRemain - displayExpense
+        );
+
+
+    /*
+     * คำนวณเปอร์เซ็นต์
+     */
 
     const savingWidth =
         (saving / totalIncome) * 100;
@@ -1128,10 +1194,15 @@ if (totalIncome > 0) {
         (investment / totalIncome) * 100;
 
     const expenseWidth =
-        (totalExpense / totalIncome) * 100;
+        (displayExpense / totalIncome) * 100;
 
     const remainWidth =
-        Math.max(0, (actualRemain / totalIncome) * 100);
+        (displayRemain / totalIncome) * 100;
+
+
+    /*
+     * กำหนดความกว้างหลอด
+     */
 
     if (chartSaving) {
         chartSaving.style.width =
@@ -1153,7 +1224,74 @@ if (totalIncome > 0) {
             remainWidth + "%";
     }
 
+
+    /*
+     * แสดงตัวเลขบนหลอด
+     */
+
+    if (chartSavingText) {
+        chartSavingText.textContent =
+            Math.round(savingWidth) + "%";
+    }
+
+    if (chartInvestmentText) {
+        chartInvestmentText.textContent =
+            Math.round(investmentWidth) + "%";
+    }
+
+    if (chartExpenseText) {
+        chartExpenseText.textContent =
+            Math.round(expenseWidth) + "%";
+    }
+
+    if (chartRemainText) {
+        chartRemainText.textContent =
+            Math.round(remainWidth) + "%";
+    }
+
+
+    /*
+     * แสดงรายละเอียดด้านล่าง
+     */
+
+    if (chartSavingLegend) {
+        chartSavingLegend.textContent =
+            formatMoney(saving) +
+            " (" +
+            savingWidth.toFixed(1) +
+            "%)";
+    }
+
+    if (chartInvestmentLegend) {
+        chartInvestmentLegend.textContent =
+            formatMoney(investment) +
+            " (" +
+            investmentWidth.toFixed(1) +
+            "%)";
+    }
+
+    if (chartExpenseLegend) {
+        chartExpenseLegend.textContent =
+            formatMoney(totalExpense) +
+            " (" +
+            ((totalExpense / totalIncome) * 100).toFixed(1) +
+            "%)";
+    }
+
+    if (chartRemainLegend) {
+        chartRemainLegend.textContent =
+            formatMoney(actualRemain) +
+            " (" +
+            ((actualRemain / totalIncome) * 100).toFixed(1) +
+            "%)";
+    }
+
+
 } else {
+
+    /*
+     * ไม่มีรายได้
+     */
 
     if (chartSaving) {
         chartSaving.style.width = "0%";
@@ -1170,8 +1308,44 @@ if (totalIncome > 0) {
     if (chartRemain) {
         chartRemain.style.width = "0%";
     }
-}
 
+
+    if (chartSavingText) {
+        chartSavingText.textContent = "";
+    }
+
+    if (chartInvestmentText) {
+        chartInvestmentText.textContent = "";
+    }
+
+    if (chartExpenseText) {
+        chartExpenseText.textContent = "";
+    }
+
+    if (chartRemainText) {
+        chartRemainText.textContent = "";
+    }
+
+
+    if (chartSavingLegend) {
+        chartSavingLegend.textContent =
+            "0 บาท (0%)";
+    }
+
+    if (chartInvestmentLegend) {
+        chartInvestmentLegend.textContent =
+            "0 บาท (0%)";
+    }
+
+    if (chartExpenseLegend) {
+        chartExpenseLegend.textContent =
+            "0 บาท (0%)";
+    }
+
+    if (chartRemainLegend) {
+        chartRemainLegend.textContent =
+            "0 บาท (0%)";
+    }
 }
 
 // ===============================
