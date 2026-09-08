@@ -25,6 +25,10 @@
 <div class="app">
 
 
+    <!-- =========================
+         Header
+    ========================== -->
+
     <header class="header">
 
         <h1>🌱 10% Rule</h1>
@@ -38,10 +42,57 @@
     </header>
 
 
+    <!-- =========================
+         Month Selector
+    ========================== -->
+
+    <section class="month-selector">
+
+        <button
+            class="month-btn"
+            onclick="previousMonth()"
+        >
+            ‹
+        </button>
+
+
+        <div class="month-center">
+
+            <span class="month-label">
+                📅 เดือนที่กำลังดู
+            </span>
+
+            <strong id="currentMonth">
+                กันยายน 2569
+            </strong>
+
+        </div>
+
+
+        <button
+            class="month-btn"
+            onclick="nextMonth()"
+        >
+            ›
+        </button>
+
+    </section>
+
+
+    <button
+        class="today-btn"
+        onclick="goToCurrentMonth()"
+    >
+        ↻ กลับเดือนปัจจุบัน
+    </button>
+
+
     <main>
 
 
-        <!-- รายได้ -->
+        <!-- =========================
+             รายได้รวม
+        ========================== -->
 
         <section class="card total-card">
 
@@ -59,7 +110,9 @@
         </section>
 
 
-        <!-- รายได้ของฉัน -->
+        <!-- =========================
+             รายได้ของฉัน
+        ========================== -->
 
         <section class="card">
 
@@ -84,7 +137,9 @@
         </section>
 
 
-        <!-- เงินออม -->
+        <!-- =========================
+             เงินออม
+        ========================== -->
 
         <section class="card saving-card">
 
@@ -124,7 +179,9 @@
         </section>
 
 
-        <!-- เป้าหมาย -->
+        <!-- =========================
+             เป้าหมาย
+        ========================== -->
 
         <section class="card goal-card">
 
@@ -203,7 +260,9 @@
         </section>
 
 
-        <!-- ประวัติการออม -->
+        <!-- =========================
+             ประวัติการออม
+        ========================== -->
 
         <section class="card">
 
@@ -216,7 +275,9 @@
         </section>
 
 
-        <!-- อัตราออม -->
+        <!-- =========================
+             อัตราการออม
+        ========================== -->
 
         <section class="card">
 
@@ -227,19 +288,27 @@
 
             <div class="percent-buttons">
 
-                <button onclick="setPercent(10)">
+                <button
+                    onclick="setPercent(10)"
+                >
                     10%
                 </button>
 
-                <button onclick="setPercent(15)">
+                <button
+                    onclick="setPercent(15)"
+                >
                     15%
                 </button>
 
-                <button onclick="setPercent(20)">
+                <button
+                    onclick="setPercent(20)"
+                >
                     20%
                 </button>
 
-                <button onclick="setPercent(30)">
+                <button
+                    onclick="setPercent(30)"
+                >
                     30%
                 </button>
 
@@ -248,7 +317,9 @@
         </section>
 
 
-        <!-- เงินลงทุน -->
+        <!-- =========================
+             เงินลงทุน
+        ========================== -->
 
         <section class="card investment-card">
 
@@ -280,7 +351,9 @@
         </section>
 
 
-        <!-- อัตราลงทุน -->
+        <!-- =========================
+             อัตราการลงทุน
+        ========================== -->
 
         <section class="card">
 
@@ -320,7 +393,9 @@
         </section>
 
 
-        <!-- เงินใช้ -->
+        <!-- =========================
+             เงินที่วางแผนให้ใช้
+        ========================== -->
 
         <section class="card">
 
@@ -339,7 +414,9 @@
         </section>
 
 
-        <!-- ค่าใช้จ่าย -->
+        <!-- =========================
+             ค่าใช้จ่าย
+        ========================== -->
 
         <section class="card expense-card">
 
@@ -380,7 +457,9 @@
         </section>
 
 
-        <!-- เงินเหลือจริง -->
+        <!-- =========================
+             เงินเหลือจริง
+        ========================== -->
 
         <section class="card actual-card">
 
@@ -409,6 +488,10 @@
 
     </main>
 
+
+    <!-- =========================
+         Footer
+    ========================== -->
 
     <footer class="footer">
 
