@@ -1,6 +1,6 @@
 // ===============================
 // 10% Rule by Kong
-// ระบบรายได้ + ออม + ลงทุน + เป้าหมาย
+// รายได้ + ออม + ลงทุน + เป้าหมาย
 // ===============================
 
 let incomes = [];
@@ -12,6 +12,8 @@ let investmentPercent = 5;
 let savingGoal = 30000;
 
 let savedAmount = 0;
+
+let savingHistory = [];
 
 
 // ===============================
@@ -29,6 +31,8 @@ document.addEventListener(
         calculate();
 
         updateGoal();
+
+        renderHistory();
 
     }
 );
@@ -258,9 +262,7 @@ function calculate() {
     document.getElementById(
         "income"
     ).textContent =
-        formatMoney(
-            totalIncome
-        );
+        formatMoney(totalIncome);
 
 
     document.getElementById(
@@ -272,9 +274,7 @@ function calculate() {
     document.getElementById(
         "saving"
     ).textContent =
-        formatMoney(
-            saving
-        );
+        formatMoney(saving);
 
 
     document.getElementById(
@@ -286,20 +286,189 @@ function calculate() {
     document.getElementById(
         "investment"
     ).textContent =
-        formatMoney(
-            investment
-        );
+        formatMoney(investment);
 
 
     document.getElementById(
         "remain"
     ).textContent =
-        formatMoney(
-            remain
+        formatMoney(remain);
+
+}
+
+
+// ===============================
+// บันทึกเงินออมเดือนนี้
+// ===============================
+
+function saveThisMonth() {
+
+    let totalIncome =
+        incomes.reduce(
+            function (
+                total,
+                income
+            ) {
+
+                return total + income.amount;
+
+            },
+            0
         );
 
 
+    let saving =
+        totalIncome *
+        savingPercent /
+        100;
+
+
+    if (saving <= 0) {
+
+        alert(
+            "ยังไม่มีเงินออมสำหรับเดือนนี้"
+        );
+
+        return;
+
+    }
+
+
+    let month =
+        new Date().toLocaleDateString(
+            "th-TH",
+            {
+                month: "long",
+                year: "numeric"
+            }
+        );
+
+
+    // ป้องกันการบันทึกเดือนเดิมซ้ำ
+
+    let alreadySaved =
+        savingHistory.some(
+            function (item) {
+
+                return item.month === month;
+
+            }
+        );
+
+
+    if (alreadySaved) {
+
+        alert(
+            "เดือนนี้บันทึกเงินออมไปแล้ว"
+        );
+
+        return;
+
+    }
+
+
+    savedAmount += saving;
+
+
+    savingHistory.push({
+
+        id: Date.now(),
+
+        month: month,
+
+        amount: saving
+
+    });
+
+
+    saveData();
+
     updateGoal();
+
+    renderHistory();
+
+
+    alert(
+        "บันทึกเงินออม " +
+        formatMoney(saving) +
+        " เรียบร้อยแล้ว"
+    );
+
+}
+
+
+// ===============================
+// แสดงประวัติการออม
+// ===============================
+
+function renderHistory() {
+
+    const list =
+        document.getElementById(
+            "savingHistory"
+        );
+
+
+    if (!list) {
+
+        return;
+
+    }
+
+
+    list.innerHTML = "";
+
+
+    if (
+        savingHistory.length === 0
+    ) {
+
+        list.innerHTML = `
+            <p class="description">
+                ยังไม่มีประวัติการออม
+            </p>
+        `;
+
+        return;
+
+    }
+
+
+    savingHistory
+        .slice()
+        .reverse()
+        .forEach(
+            function (item) {
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.className =
+                    "history-item";
+
+
+                row.innerHTML = `
+
+                    <div>
+                        <strong>
+                            ${escapeHTML(item.month)}
+                        </strong>
+                    </div>
+
+                    <strong class="history-money">
+                        +${formatMoney(item.amount)}
+                    </strong>
+
+                `;
+
+
+                list.appendChild(row);
+
+            }
+        );
 
 }
 
@@ -338,7 +507,7 @@ function setInvestmentPercent(
 
 
 // ===============================
-// ตั้งเป้าหมายเงินก้อน
+// ตั้งเป้าหมาย
 // ===============================
 
 function setSavingGoal() {
@@ -395,30 +564,6 @@ function updateGoal() {
         );
 
 
-    const savedElement =
-        document.getElementById(
-            "savedAmount"
-        );
-
-
-    const percentElement =
-        document.getElementById(
-            "goalPercent"
-        );
-
-
-    const fillElement =
-        document.getElementById(
-            "progressFill"
-        );
-
-
-    const messageElement =
-        document.getElementById(
-            "goalMessage"
-        );
-
-
     if (!goalElement) {
 
         return;
@@ -426,20 +571,23 @@ function updateGoal() {
     }
 
 
-    goalElement.textContent =
+    document.getElementById(
+        "savingGoal"
+    ).textContent =
         formatMoney(
             savingGoal
         );
 
 
-    savedElement.textContent =
+    document.getElementById(
+        "savedAmount"
+    ).textContent =
         formatMoney(
             savedAmount
         );
 
 
-    let percent =
-        0;
+    let percent = 0;
 
 
     if (savingGoal > 0) {
@@ -459,18 +607,30 @@ function updateGoal() {
         );
 
 
-    percentElement.textContent =
+    document.getElementById(
+        "goalPercent"
+    ).textContent =
         percent.toFixed(1) + "%";
 
 
-    fillElement.style.width =
+    document.getElementById(
+        "progressFill"
+    ).style.width =
         percent + "%";
 
 
-    if (savedAmount >= savingGoal) {
+    const message =
+        document.getElementById(
+            "goalMessage"
+        );
 
-        messageElement.textContent =
-            "🎉 เป้าหมายเงินก้อนสำเร็จแล้ว!";
+
+    if (
+        savedAmount >= savingGoal
+    ) {
+
+        message.textContent =
+            "เป้าหมายเงินก้อนสำเร็จแล้ว!";
 
     }
     else {
@@ -480,7 +640,7 @@ function updateGoal() {
             savedAmount;
 
 
-        messageElement.textContent =
+        message.textContent =
             "เหลืออีก " +
             formatMoney(
                 remaining
@@ -529,6 +689,14 @@ function saveData() {
         savedAmount
     );
 
+
+    localStorage.setItem(
+        "kongSavingHistory",
+        JSON.stringify(
+            savingHistory
+        )
+    );
+
 }
 
 
@@ -565,6 +733,12 @@ function loadData() {
     const savedMoney =
         localStorage.getItem(
             "kongSavedAmount"
+        );
+
+
+    const savedHistory =
+        localStorage.getItem(
+            "kongSavingHistory"
         );
 
 
@@ -634,11 +808,30 @@ function loadData() {
 
     }
 
+
+    if (savedHistory) {
+
+        try {
+
+            savingHistory =
+                JSON.parse(
+                    savedHistory
+                );
+
+        }
+        catch (error) {
+
+            savingHistory = [];
+
+        }
+
+    }
+
 }
 
 
 // ===============================
-// รูปแบบเงิน
+// จัดรูปแบบเงิน
 // ===============================
 
 function formatMoney(number) {
