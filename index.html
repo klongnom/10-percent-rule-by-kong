@@ -25,6 +25,8 @@
 <div class="app">
 
 
+    <!-- Header -->
+
     <header class="header">
 
         <h1>🌱 10% Rule</h1>
@@ -88,13 +90,16 @@
 
             <div class="saving-row">
 
-                <span>อัตราออม</span>
+                <span>
+                    อัตราออม
+                </span>
 
                 <strong id="savingPercent">
                     10%
                 </strong>
 
             </div>
+
 
             <p
                 class="money"
@@ -103,6 +108,7 @@
                 0 บาท
             </p>
 
+
             <p class="description">
 
                 เงินจำนวนนี้ควรถูกแยกออก
@@ -110,16 +116,26 @@
 
             </p>
 
+
+            <button
+                class="save-month-btn"
+                onclick="saveThisMonth()"
+            >
+                ✓ บันทึกเงินออมเดือนนี้
+            </button>
+
         </section>
 
 
-        <!-- เป้าหมายเงินออม -->
+        <!-- เป้าหมายเงินก้อน -->
 
         <section class="card goal-card">
 
             <div class="section-title">
 
-                <h2>🎯 เป้าหมายเงินก้อน</h2>
+                <h2>
+                    🎯 เป้าหมายเงินก้อน
+                </h2>
 
                 <button
                     class="add-btn"
@@ -190,11 +206,34 @@
         </section>
 
 
+        <!-- ประวัติการออม -->
+
+        <section class="card">
+
+            <h2>
+                📅 ประวัติการออม
+            </h2>
+
+
+            <div id="savingHistory">
+
+                <p class="description">
+                    ยังไม่มีประวัติการออม
+                </p>
+
+            </div>
+
+        </section>
+
+
         <!-- อัตราออม -->
 
         <section class="card">
 
-            <h2>🌱 อัตราการออม</h2>
+            <h2>
+                🌱 อัตราการออม
+            </h2>
+
 
             <div class="percent-buttons">
 
@@ -216,6 +255,7 @@
 
             </div>
 
+
             <p class="description">
                 เลือกเปอร์เซ็นต์ที่ต้องการออม
             </p>
@@ -227,7 +267,10 @@
 
         <section class="card investment-card">
 
-            <h2>📈 เงินลงทุนระยะยาว</h2>
+            <h2>
+                📈 เงินลงทุนระยะยาว
+            </h2>
+
 
             <div class="saving-row">
 
@@ -264,7 +307,10 @@
 
         <section class="card">
 
-            <h2>📈 อัตราการลงทุน</h2>
+            <h2>
+                📈 อัตราการลงทุน
+            </h2>
+
 
             <div class="percent-buttons">
 
@@ -294,10 +340,6 @@
 
             </div>
 
-            <p class="description">
-                เลือกเปอร์เซ็นต์ลงทุนระยะยาว
-            </p>
-
         </section>
 
 
@@ -305,7 +347,10 @@
 
         <section class="card">
 
-            <h2>💵 เงินใช้ได้</h2>
+            <h2>
+                💵 เงินใช้ได้
+            </h2>
+
 
             <p
                 class="money"
@@ -313,6 +358,7 @@
             >
                 0 บาท
             </p>
+
 
             <p class="description">
 
