@@ -496,3 +496,70 @@ body {
 .investment-card {
     border-left: 5px solid #66bb6a;
 }
+/* =========================
+   Expense
+========================= */
+
+.expense-card {
+    border-left: 5px solid #f59e0b;
+}
+
+.expense-total {
+    color: #dc2626;
+}
+
+.expense-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 14px 0;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.expense-item:last-child {
+    border-bottom: none;
+}
+
+.expense-info {
+    min-width: 0;
+}
+
+.expense-name {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.expense-category {
+    margin-top: 4px;
+
+    color: #64748b;
+
+    font-size: 13px;
+}
+
+.expense-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #dc2626;
+
+    text-align: right;
+}
+
+
+/* =========================
+   Actual Money
+========================= */
+
+.actual-card {
+    border-left: 5px solid #2e7d32;
+}
