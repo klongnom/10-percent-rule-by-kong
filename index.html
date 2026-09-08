@@ -1,21 +1,74 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>10% Rule by Kong</title>
-<link rel="stylesheet" href="style.css">
+    <title>10% Rule by Kong</title>
 
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<h1>🌱 10% Rule by Kong</h1>
+<div class="app">
 
-<h2>ออมก่อน ค่อยใช้</h2>
+    <!-- Header -->
+    <header class="header">
+        <h1>🌱 10% Rule</h1>
+        <p>by Kong</p>
+    </header>
 
-<p>เว็บจัดการเงินส่วนตัวของ Kong</p>
+
+    <!-- รายได้ -->
+    <section class="card">
+        <h2>💰 รายได้เดือนนี้</h2>
+        <p class="money" id="income">0 บาท</p>
+    </section>
+
+
+    <!-- ออมก่อนจ่าย -->
+    <section class="card saving-card">
+        <h2>🌱 ออมก่อนจ่าย</h2>
+
+        <p>
+            อัตราออม
+            <strong id="savingPercent">10%</strong>
+        </p>
+
+        <p class="money" id="saving">
+            0 บาท
+        </p>
+    </section>
+
+
+    <!-- เงินใช้ได้ -->
+    <section class="card">
+        <h2>💵 เงินใช้ได้หลังออม</h2>
+
+        <p class="money" id="remain">
+            0 บาท
+        </p>
+    </section>
+
+
+    <!-- ปุ่ม -->
+    <button onclick="calculate()">
+        คำนวณเงิน
+    </button>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        10% Rule by Kong
+        <br>
+        Pay Yourself First
+    </footer>
+
+</div>
+
+
+<script src="app.js"></script>
 
 </body>
 </html>
