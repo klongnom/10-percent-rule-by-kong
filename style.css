@@ -810,3 +810,35 @@ body {
     color: #334155;
     font-size: 13px;
 }
+/* =========================
+   Financial Analysis V3.1
+========================= */
+
+.financial-analysis {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 10px;
+    border-left: 5px solid #2e7d32;
+}
+
+.analysis-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #334155;
+    margin-bottom: 10px;
+}
+
+.analysis-status {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 8px;
+}
+
+.financial-analysis p {
+    margin: 0;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.7;
+}
