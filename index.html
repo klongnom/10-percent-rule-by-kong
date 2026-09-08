@@ -1,177 +1,327 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>10% Rule by Kong</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
+
 
 <body>
 
 <div class="app">
 
-    <!-- Header -->
+
+    <!-- =========================
+         Header
+    ========================== -->
+
     <header class="header">
+
         <h1>🌱 10% Rule</h1>
+
         <p>by Kong</p>
-        <small>ออมก่อน ค่อยใช้</small>
+
+        <small>
+            ออมก่อน ค่อยใช้
+        </small>
+
     </header>
 
 
-    <!-- Dashboard -->
+
+    <!-- =========================
+         Dashboard
+    ========================== -->
+
     <main>
 
+
         <!-- รายได้รวม -->
+
         <section class="card total-card">
-            <h2>💰 รายได้เดือนนี้</h2>
-            <p class="money" id="income">0 บาท</p>
+
+            <h2>
+                💰 รายได้เดือนนี้
+            </h2>
+
+            <p
+                class="money"
+                id="income"
+            >
+                0 บาท
+            </p>
+
         </section>
 
 
-        <!-- รายได้ของฉัน -->
+
+        <!-- =========================
+             รายได้ของฉัน
+        ========================== -->
+
         <section class="card">
 
             <div class="section-title">
-                <h2>💼 รายได้ของฉัน</h2>
-                <button class="add-btn" onclick="addIncome()">
+
+                <h2>
+                    💼 รายได้ของฉัน
+                </h2>
+
+                <button
+                    class="add-btn"
+                    onclick="addIncome()"
+                >
                     ＋ เพิ่ม
                 </button>
+
             </div>
+
 
             <div id="incomeList">
 
-                <!-- รายได้จะถูกสร้างตรงนี้ -->
+                <!-- รายได้จะแสดงตรงนี้ -->
 
             </div>
 
         </section>
 
 
-        <!-- ออมก่อนจ่าย -->
+
+        <!-- =========================
+             เงินออม
+        ========================== -->
+
         <section class="card saving-card">
 
-            <h2>🌱 ออมก่อนจ่าย</h2>
+            <h2>
+                🌱 ออมก่อนจ่าย
+            </h2>
+
 
             <div class="saving-row">
-                <span>อัตราออม</span>
+
+                <span>
+                    อัตราออม
+                </span>
 
                 <strong id="savingPercent">
                     10%
                 </strong>
+
             </div>
 
-            <p class="money" id="saving">
+
+            <p
+                class="money"
+                id="saving"
+            >
                 0 บาท
             </p>
 
+
             <p class="description">
-                เงินจำนวนนี้ควรถูกแยกออกก่อนนำเงินไปใช้จ่าย
+
+                เงินจำนวนนี้ควรถูกแยกออก
+                ก่อนนำเงินไปใช้จ่าย
+
             </p>
 
         </section>
 
 
-        <!-- เงินลงทุน -->
-<section class="card investment-card">
 
-    <h2>📈 เงินลงทุนระยะยาว</h2>
+        <!-- =========================
+             เปอร์เซ็นต์เงินออม
+        ========================== -->
 
-    <div class="saving-row">
-        <span>อัตราลงทุน</span>
-
-        <strong id="investmentPercent">
-            5%
-        </strong>
-    </div>
-
-    <p class="money" id="investment">
-        0 บาท
-    </p>
-
-    <p class="description">
-        เงินส่วนนี้สำหรับสร้างความมั่งคั่งระยะยาว
-    </p>
-
-</section>
-
-
-<!-- เงินใช้ได้ -->
-<section class="card">
-
-    <h2>💵 เงินใช้ได้หลังออมและลงทุน</h2>
-
-    <p class="money" id="remain">
-        0 บาท
-    </p>
-
-</section>
-
-
-<!-- ปุ่มตั้งค่าเปอร์เซ็นต์ลงทุน -->
-<section class="card">
-
-    <h2>📈 อัตราการลงทุน</h2>
-
-    <div class="percent-buttons">
-
-        <button onclick="setInvestmentPercent(5)">
-            5%
-        </button>
-
-        <button onclick="setInvestmentPercent(10)">
-            10%
-        </button>
-
-        <button onclick="setInvestmentPercent(15)">
-            15%
-        </button>
-
-        <button onclick="setInvestmentPercent(20)">
-            20%
-        </button>
-
-    </div>
-
-    <p class="description">
-        เลือกเปอร์เซ็นต์ที่ต้องการลงทุนระยะยาว
-    </p>
-
-</section>
-
-
-        <!-- ปุ่มตั้งค่าเปอร์เซ็นต์ -->
         <section class="card">
 
-            <h2>⚙️ อัตราการออม</h2>
+            <h2>
+                🌱 อัตราการออม
+            </h2>
+
 
             <div class="percent-buttons">
 
-                <button onclick="setPercent(10)">10%</button>
+                <button onclick="setPercent(10)">
+                    10%
+                </button>
 
-                <button onclick="setPercent(15)">15%</button>
+                <button onclick="setPercent(15)">
+                    15%
+                </button>
 
-                <button onclick="setPercent(20)">20%</button>
+                <button onclick="setPercent(20)">
+                    20%
+                </button>
 
-                <button onclick="setPercent(30)">30%</button>
+                <button onclick="setPercent(30)">
+                    30%
+                </button>
 
             </div>
 
+
             <p class="description">
+
                 เลือกเปอร์เซ็นต์ที่ต้องการออม
+
             </p>
 
         </section>
+
+
+
+        <!-- =========================
+             เงินลงทุน
+        ========================== -->
+
+        <section class="card investment-card">
+
+            <h2>
+                📈 เงินลงทุนระยะยาว
+            </h2>
+
+
+            <div class="saving-row">
+
+                <span>
+                    อัตราลงทุน
+                </span>
+
+                <strong id="investmentPercent">
+                    5%
+                </strong>
+
+            </div>
+
+
+            <p
+                class="money"
+                id="investment"
+            >
+                0 บาท
+            </p>
+
+
+            <p class="description">
+
+                เงินส่วนนี้สำหรับสร้าง
+                ความมั่งคั่งระยะยาว
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             เปอร์เซ็นต์เงินลงทุน
+        ========================== -->
+
+        <section class="card">
+
+            <h2>
+                📈 อัตราการลงทุน
+            </h2>
+
+
+            <div class="percent-buttons">
+
+                <button
+                    onclick="setInvestmentPercent(5)"
+                >
+                    5%
+                </button>
+
+                <button
+                    onclick="setInvestmentPercent(10)"
+                >
+                    10%
+                </button>
+
+                <button
+                    onclick="setInvestmentPercent(15)"
+                >
+                    15%
+                </button>
+
+                <button
+                    onclick="setInvestmentPercent(20)"
+                >
+                    20%
+                </button>
+
+            </div>
+
+
+            <p class="description">
+
+                เลือกเปอร์เซ็นต์ที่ต้องการ
+                ลงทุนระยะยาว
+
+            </p>
+
+        </section>
+
+
+
+        <!-- =========================
+             เงินใช้ได้
+        ========================== -->
+
+        <section class="card">
+
+            <h2>
+                💵 เงินใช้ได้
+            </h2>
+
+
+            <p
+                class="money"
+                id="remain"
+            >
+                0 บาท
+            </p>
+
+
+            <p class="description">
+
+                เงินที่เหลือหลังหัก
+                เงินออมและเงินลงทุน
+
+            </p>
+
+        </section>
+
 
     </main>
 
 
-    <!-- Footer -->
+
+    <!-- =========================
+         Footer
+    ========================== -->
+
     <footer class="footer">
 
-        <strong>10% Rule by Kong</strong>
+        <strong>
+            10% Rule by Kong
+        </strong>
 
         <br>
 
@@ -179,10 +329,12 @@
 
     </footer>
 
+
 </div>
 
 
 <script src="app.js"></script>
 
 </body>
+
 </html>
