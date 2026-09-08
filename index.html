@@ -149,21 +149,55 @@
 
     </div>
     <div class="dashboard-chart">
-    <div class="chart-title">📊 เงินเดือนนี้แบ่งอย่างไร?</div>
+
+    <div class="chart-title">
+        📊 เงินเดือนนี้แบ่งอย่างไร?
+    </div>
 
     <div class="chart-bar">
-        <div id="chartSaving" class="chart-saving"></div>
-        <div id="chartInvestment" class="chart-investment"></div>
-        <div id="chartExpense" class="chart-expense"></div>
-        <div id="chartRemain" class="chart-remain"></div>
+
+        <div id="chartSaving" class="chart-saving">
+            <span id="chartSavingText"></span>
+        </div>
+
+        <div id="chartInvestment" class="chart-investment">
+            <span id="chartInvestmentText"></span>
+        </div>
+
+        <div id="chartExpense" class="chart-expense">
+            <span id="chartExpenseText"></span>
+        </div>
+
+        <div id="chartRemain" class="chart-remain">
+            <span id="chartRemainText"></span>
+        </div>
+
     </div>
 
     <div class="chart-legend">
-        <span>🌱 ออม</span>
-        <span>📈 ลงทุน</span>
-        <span>🧾 ใช้จริง</span>
-        <span>💳 เหลือ</span>
+
+        <div>
+            <span>🌱 ออม</span>
+            <strong id="chartSavingLegend">0 บาท (0%)</strong>
+        </div>
+
+        <div>
+            <span>📈 ลงทุน</span>
+            <strong id="chartInvestmentLegend">0 บาท (0%)</strong>
+        </div>
+
+        <div>
+            <span>🧾 ใช้จริง</span>
+            <strong id="chartExpenseLegend">0 บาท (0%)</strong>
+        </div>
+
+        <div>
+            <span>💳 เหลือ</span>
+            <strong id="chartRemainLegend">0 บาท (0%)</strong>
+        </div>
+
     </div>
+
 </div>
 
 </section>
