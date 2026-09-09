@@ -1495,13 +1495,89 @@ if (totalIncome > 0) {
             "0 บาท (0%)";
     }
   }
-}   
+}  
+    
+
+
+    // =========================
+    // V3.2 Self Tax Fund Display
+    // =========================
+
+    const selfTaxFundDisplay =
+        document.getElementById(
+            "selfTaxFundDisplay"
+        );
+
+    const selfTaxProgress =
+        document.getElementById(
+            "selfTaxProgress"
+        );
+
+    const selfTaxRemaining =
+        document.getElementById(
+            "selfTaxRemaining"
+        );
+
+    const investmentFromTaxDisplay =
+        document.getElementById(
+            "investmentFromTaxDisplay"
+        );
+
+
+    if (selfTaxFundDisplay) {
+
+        selfTaxFundDisplay.textContent =
+            formatMoney(selfTaxFund);
+
+    }
+
+
+    if (selfTaxProgress) {
+
+        const progress =
+            Math.min(
+                100,
+                (selfTaxFund / selfTaxGoal) * 100
+            );
+
+        selfTaxProgress.style.width =
+            progress + "%";
+
+    }
+
+
+    if (selfTaxRemaining) {
+
+        const remaining =
+            Math.max(
+                0,
+                selfTaxGoal - selfTaxFund
+            );
+
+        selfTaxRemaining.textContent =
+            formatMoney(remaining);
+
+    }
+
+
+    if (investmentFromTaxDisplay) {
+
+        investmentFromTaxDisplay.textContent =
+            formatMoney(
+                investmentFromTax
+            );
+
+    }
+
+
+}
 
 // ===============================
 // บันทึกเงินออมเดือนนี้
 // ===============================
 
 function saveThisMonth() {
+    
 
     const monthIncomes =
         incomes.filter(
