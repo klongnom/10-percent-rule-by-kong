@@ -23,6 +23,20 @@ let savedAmount = 0;
 
 let savingHistory = [];
 
+// ===============================
+// V3.2 ระบบวินัยการเงิน
+// ===============================
+
+let disciplineScore = 0;
+
+let selfTaxFund = 0;
+
+let selfTaxGoal = 500;
+
+let investmentFromTax = 0;
+
+let luxuryExpenses = [];
+
 
 // เดือนที่กำลังดู
 let currentMonth = getCurrentMonth();
