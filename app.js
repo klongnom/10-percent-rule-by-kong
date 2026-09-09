@@ -1833,40 +1833,11 @@ localStorage.setItem(
     
 }
 
-    // =========================
-    // V3.2 บันทึกระบบวินัยการเงิน
-    // =========================
-
-    localStorage.setItem(
-        "kongDisciplineScore",
-        disciplineScore
-    );
-
-    localStorage.setItem(
-        "kongSelfTaxFund",
-        selfTaxFund
-    );
-
-    localStorage.setItem(
-        "kongInvestmentFromTax",
-        investmentFromTax
-    );
-
-    localStorage.setItem(
-        "kongLuxuryExpenses",
-        JSON.stringify(
-            luxuryExpenses
-        )
-    );
-}
-
-
-// ===============================
+ // ===============================
 // โหลดข้อมูล
 // ===============================
 
 function loadData() {
-        
 
     // =========================
     // V3.2 โหลดระบบวินัยการเงิน
@@ -1892,36 +1863,64 @@ function loadData() {
             "kongLuxuryExpenses"
         );
 
+
     if (savedDiscipline !== null) {
 
         disciplineScore =
-            Number(savedDiscipline);
+            Number(
+                savedDiscipline
+            );
 
     }
+
 
     if (savedSelfTax !== null) {
 
         selfTaxFund =
-            Number(savedSelfTax);
+            Number(
+                savedSelfTax
+            );
 
     }
+
 
     if (savedInvestmentTax !== null) {
 
         investmentFromTax =
-            Number(savedInvestmentTax);
+            Number(
+                savedInvestmentTax
+            );
 
     }
+
 
     if (savedLuxury) {
 
-        luxuryExpenses =
-            JSON.parse(savedLuxury);
+        try {
+
+            luxuryExpenses =
+                JSON.parse(
+                    savedLuxury
+                );
+
+        }
+        catch (error) {
+
+            luxuryExpenses = [];
+
+        }
 
     }
 
 
+    // =========================
+    // ข้อมูลเดิม
+    // =========================
 
+    const savedIncomes =
+        localStorage.getItem(
+            "kongIncomes"
+        );
 
 
     const savedExpenses =
@@ -1958,7 +1957,6 @@ function loadData() {
         localStorage.getItem(
             "kongSavingHistory"
         );
-    }
 
 
     // =========================
@@ -2072,7 +2070,7 @@ function loadData() {
 
 
     // =========================
-    // ประวัติ
+    // ประวัติการออม
     // =========================
 
     if (savedHistory) {
@@ -2096,12 +2094,6 @@ function loadData() {
 
     // =========================
     // แปลงข้อมูลเก่า
-    // =========================
-    //
-    // ข้อมูลเดิมที่สร้างก่อนระบบเดือน
-    // จะถูกกำหนดให้อยู่เดือนปัจจุบัน
-    //
-    // เพื่อป้องกันข้อมูลหาย
     // =========================
 
     let changed = false;
@@ -2180,7 +2172,8 @@ function loadData() {
 
     }
 
-}
+}  
+
 
 
 // ===============================
