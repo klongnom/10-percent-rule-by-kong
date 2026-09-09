@@ -1839,6 +1839,26 @@ localStorage.setItem(
 // ===============================
 
 function loadData() {
+    
+    const savedDiscipline =
+    localStorage.getItem(
+        "kongDisciplineScore"
+    );
+
+const savedSelfTax =
+    localStorage.getItem(
+        "kongSelfTaxFund"
+    );
+
+const savedInvestmentTax =
+    localStorage.getItem(
+        "kongInvestmentFromTax"
+    );
+
+const savedLuxury =
+    localStorage.getItem(
+        "kongLuxuryExpenses"
+    );
 
     const savedIncomes =
         localStorage.getItem(
