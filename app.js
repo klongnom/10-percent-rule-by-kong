@@ -2353,3 +2353,108 @@ function escapeHTML(text) {
         );
 
 }
+// ===============================
+// V3.2.2 วินัยการเงิน
+// แสดงคะแนนและระดับ
+// ===============================
+
+function updateDisciplineDisplay() {
+
+    const scoreElement =
+        document.getElementById(
+            "disciplineScoreDisplay"
+        );
+
+    const levelElement =
+        document.getElementById(
+            "disciplineLevel"
+        );
+
+    const progressElement =
+        document.getElementById(
+            "disciplineProgress"
+        );
+
+    const messageElement =
+        document.getElementById(
+            "disciplineMessage"
+        );
+
+    if (
+        !scoreElement ||
+        !levelElement ||
+        !progressElement ||
+        !messageElement
+    ) {
+        return;
+    }
+
+    const score =
+        Math.max(
+            0,
+            Math.min(
+                100,
+                disciplineScore
+            )
+        );
+
+    scoreElement.textContent =
+        score + " / 100";
+
+    progressElement.style.width =
+        score + "%";
+
+
+    // =========================
+    // ระดับ
+    // =========================
+
+    if (score < 30) {
+
+        levelElement.textContent =
+            "🌱 เริ่มต้น";
+
+        messageElement.innerHTML =
+            "🌱 คุณกำลังเริ่มสร้างวินัยทางการเงิน" +
+            "<br>" +
+            "ทุกพฤติกรรมที่ดีจะค่อย ๆ เพิ่มคะแนน";
+
+    }
+
+    else if (score < 60) {
+
+        levelElement.textContent =
+            "🟡 ผู้ฝึกวินัย";
+
+        messageElement.innerHTML =
+            "🟡 เริ่มเห็นพฤติกรรมทางการเงินที่ดีขึ้น" +
+            "<br>" +
+            "รักษาความสม่ำเสมอต่อไป";
+
+    }
+
+    else if (score < 90) {
+
+        levelElement.textContent =
+            "🟢 นักสร้างอนาคต";
+
+        messageElement.innerHTML =
+            "🟢 คุณกำลังสร้างนิสัยทางการเงินอย่างจริงจัง" +
+            "<br>" +
+            "ความสม่ำเสมอคือสิ่งสำคัญ";
+
+    }
+
+    else {
+
+        levelElement.textContent =
+            "🏆 Financial Master";
+
+        messageElement.innerHTML =
+            "🏆 คุณรักษาวินัยทางการเงินได้ยอดเยี่ยม" +
+            "<br>" +
+            "รักษามาตรฐานนี้ต่อไป";
+
+    }
+
+}
