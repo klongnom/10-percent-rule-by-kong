@@ -1921,47 +1921,7 @@ function loadData() {
     }
 
 
-    const savedIncomes =
 
-    
-
-
-if(savedInvestmentTax !== null){
-
-    investmentFromTax =
-        Number(savedInvestmentTax);
-
-}
-
-
-if(savedLuxury){
-
-    luxuryExpenses =
-        JSON.parse(savedLuxury);
-
-}
-    
-  
-
-const savedSelfTax =
-    localStorage.getItem(
-        "kongSelfTaxFund"
-    );
-
-const savedInvestmentTax =
-    localStorage.getItem(
-        "kongInvestmentFromTax"
-    );
-
-const savedLuxury =
-    localStorage.getItem(
-        "kongLuxuryExpenses"
-    );
-
-    const savedIncomes =
-        localStorage.getItem(
-            "kongIncomes"
-        );
 
 
     const savedExpenses =
