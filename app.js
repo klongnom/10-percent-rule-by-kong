@@ -1426,77 +1426,11 @@ if (totalIncome > 0) {
             "%)";
     }
 
-    if (chartRemainLegend) {
-        chartRemainLegend.textContent =
-            formatMoney(actualRemain) +
-            " (" +
-            ((actualRemain / totalIncome) * 100).toFixed(1) +
-            "%)";
-    }
-
-
-} else {
-
-    /*
-     * ไม่มีรายได้
-     */
-
-    if (chartSaving) {
-        chartSaving.style.width = "0%";
-    }
-
-    if (chartInvestment) {
-        chartInvestment.style.width = "0%";
-    }
-
-    if (chartExpense) {
-        chartExpense.style.width = "0%";
-    }
-
-    if (chartRemain) {
-        chartRemain.style.width = "0%";
-    }
-
-
-    if (chartSavingText) {
-        chartSavingText.textContent = "";
-    }
-
-    if (chartInvestmentText) {
-        chartInvestmentText.textContent = "";
-    }
-
-    if (chartExpenseText) {
-        chartExpenseText.textContent = "";
-    }
-
-    if (chartRemainText) {
-        chartRemainText.textContent = "";
-    }
-
-
-    if (chartSavingLegend) {
-        chartSavingLegend.textContent =
-            "0 บาท (0%)";
-    }
-
-    if (chartInvestmentLegend) {
-        chartInvestmentLegend.textContent =
-            "0 บาท (0%)";
-    }
-
-    if (chartExpenseLegend) {
-        chartExpenseLegend.textContent =
-            "0 บาท (0%)";
-    }
-
-    if (chartRemainLegend) {
+       if (chartRemainLegend) {
         chartRemainLegend.textContent =
             "0 บาท (0%)";
     }
   }
- 
-    
 
 
     // =========================
@@ -1523,17 +1457,12 @@ if (totalIncome > 0) {
             "investmentFromTaxDisplay"
         );
 
-
     if (selfTaxFundDisplay) {
-
         selfTaxFundDisplay.textContent =
             formatMoney(selfTaxFund);
-
     }
 
-
     if (selfTaxProgress) {
-
         const progress =
             Math.min(
                 100,
@@ -1542,12 +1471,9 @@ if (totalIncome > 0) {
 
         selfTaxProgress.style.width =
             progress + "%";
-
     }
 
-
     if (selfTaxRemaining) {
-
         const remaining =
             Math.max(
                 0,
@@ -1556,27 +1482,21 @@ if (totalIncome > 0) {
 
         selfTaxRemaining.textContent =
             formatMoney(remaining);
-
     }
 
-
     if (investmentFromTaxDisplay) {
-
         investmentFromTaxDisplay.textContent =
             formatMoney(
                 investmentFromTax
             );
-
     }
-
 
 }
 
+
 // ===============================
 // บันทึกเงินออมเดือนนี้
-// ===============================
-
-function saveThisMonth() {
+// =============================== 
     
 
     const monthIncomes =
