@@ -1829,7 +1829,9 @@ localStorage.setItem(
         JSON.stringify(
             savingHistory
         )
-    );
+      );
+    
+}
 
     // =========================
     // V3.2 บันทึกระบบวินัยการเงิน
