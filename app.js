@@ -491,12 +491,16 @@ function deleteIncome(id) {
 
 }
 
-
 // ===============================
 // เพิ่มค่าใช้จ่าย
+// V3.2 Self Tax 10%
 // ===============================
 
 function addExpense() {
+
+    // =========================
+    // ชื่อรายการ
+    // =========================
 
     let name =
         prompt(
@@ -511,6 +515,10 @@ function addExpense() {
         return;
     }
 
+
+    // =========================
+    // เลือกหมวดหมู่
+    // =========================
 
     let categoryText =
         "เลือกหมวดหมู่โดยพิมพ์หมายเลข\n\n";
@@ -569,6 +577,10 @@ function addExpense() {
     }
 
 
+    // =========================
+    // จำนวนเงิน
+    // =========================
+
     let amountText =
         prompt(
             "จำนวนเงิน เช่น 100"
@@ -597,9 +609,42 @@ function addExpense() {
     }
 
 
+    // =========================
+    // V3.2
+    // ถามว่าจะจ่ายภาษีให้ตัวเองหรือไม่
+    // =========================
+
+    const isLuxury =
+        confirm(
+            "ต้องการจ่ายภาษีให้ตัวเอง 10% หรือไม่?\n\n" +
+            "กด OK = ใช่ (+10% เข้ากองทุนลงทุน)\n" +
+            "กด Cancel = ไม่"
+        );
+
+
+    // =========================
+    // คำนวณ Self Tax
+    // =========================
+
+    let selfTax = 0;
+
+
+    if (isLuxury) {
+
+        selfTax =
+            amount * 0.10;
+
+    }
+
+
+    // =========================
+    // เพิ่มค่าใช้จ่าย
+    // =========================
+
     expenses.push({
 
-        id: Date.now(),
+        id:
+            Date.now(),
 
         name:
             name.trim(),
@@ -610,17 +655,63 @@ function addExpense() {
         amount:
             amount,
 
+        isLuxury:
+            isLuxury,
+
+        selfTax:
+            selfTax,
+
         month:
             currentMonth
 
     });
 
 
+    // =========================
+    // V3.2
+    // เพิ่มเงินเข้า Self Tax Fund
+    // =========================
+
+    if (selfTax > 0) {
+
+        selfTaxFund +=
+            selfTax;
+
+    }
+
+
+    // =========================
+    // บันทึกข้อมูล
+    // =========================
+
     saveData();
 
     renderExpenses();
 
     calculate();
+
+
+    // =========================
+    // แจ้งผล
+    // =========================
+
+    if (isLuxury) {
+
+        alert(
+            "บันทึกค่าใช้จ่ายแล้ว\n\n" +
+            "ค่าใช้จ่าย: " +
+            formatMoney(amount) +
+            "\n" +
+            "ภาษีตัวเอง 10%: " +
+            formatMoney(selfTax) +
+            "\n\n" +
+            "Self Tax Fund: " +
+            formatMoney(selfTaxFund) +
+            " / " +
+            formatMoney(selfTaxGoal)
+        );
+
+    }
 
 }
 
