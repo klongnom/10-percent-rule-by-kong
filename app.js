@@ -668,16 +668,59 @@ function addExpense() {
 
 
     // =========================
-    // V3.2
-    // เพิ่มเงินเข้า Self Tax Fund
-    // =========================
+// V3.2
+// เพิ่มเงินเข้า Self Tax Fund
+// และเปลี่ยนเป็นเงินลงทุนเมื่อครบ 500
+// =========================
 
-    if (selfTax > 0) {
+if (selfTax > 0) {
 
-        selfTaxFund +=
-            selfTax;
+    selfTaxFund +=
+        selfTax;
+
+    const investmentBatch =
+        Math.floor(
+            selfTaxFund /
+            selfTaxGoal
+        ) *
+        selfTaxGoal;
+
+    if (
+        investmentBatch > 0
+    ) {
+
+        investmentFromTax +=
+            investmentBatch;
+
+        selfTaxFund -=
+            investmentBatch;
+
+        disciplineScore =
+            Math.min(
+                100,
+                disciplineScore + 10
+            );
+
+        alert(
+            "🎉 คุณสร้างเงินลงทุนสำเร็จ!\n\n" +
+            "เงินลงทุนจาก Self Tax: " +
+            formatMoney(
+                investmentBatch
+            ) +
+            "\n\n" +
+            "Self Tax Fund เหลือ: " +
+            formatMoney(
+                selfTaxFund
+            ) +
+            "\n\n" +
+            "คะแนนวินัย: " +
+            disciplineScore +
+            " / 100"
+        );
 
     }
+
+}
 
 
     // =========================
