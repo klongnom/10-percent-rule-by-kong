@@ -1870,66 +1870,7 @@ function loadData() {
     // V3.2 โหลดระบบวินัยการเงิน
     // =========================
 
-    const savedDiscipline =
-        localStorage.getItem(
-            "kongDisciplineScore"
-        );
-
-    const savedSelfTax =
-        localStorage.getItem(
-            "kongSelfTaxFund"
-        );
-
-    const savedInvestmentTax =
-        localStorage.getItem(
-            "kongInvestmentFromTax"
-        );
-
-    const savedLuxury =
-        localStorage.getItem(
-            "kongLuxuryExpenses"
-        );
-        if (savedDiscipline !== null) {
-
-        disciplineScore =
-            Number(savedDiscipline);
-
-    }
-
-    if (savedSelfTax !== null) {
-
-        selfTaxFund =
-            Number(savedSelfTax);
-
-    }
-
-    if (savedInvestmentTax !== null) {
-
-        investmentFromTax =
-            Number(savedInvestmentTax);
-
-    }
-
-    if (savedLuxury) {
-
-        luxuryExpenses =
-            JSON.parse(savedLuxury);
-
-    }
-    if(savedDiscipline !== null){
-
-    disciplineScore =
-        Number(savedDiscipline);
-
-}
-
-
-if(savedSelfTax !== null){
-
-    selfTaxFund =
-        Number(savedSelfTax);
-
-}
+    
 
 
 if(savedInvestmentTax !== null){
@@ -1947,10 +1888,7 @@ if(savedLuxury){
 
 }
     
-    const savedDiscipline =
-    localStorage.getItem(
-        "kongDisciplineScore"
-    );
+  
 
 const savedSelfTax =
     localStorage.getItem(
