@@ -1763,6 +1763,28 @@ function updateGoal() {
 function saveData() {
 
     localStorage.setItem(
+    "kongDisciplineScore",
+    disciplineScore
+);
+
+localStorage.setItem(
+    "kongSelfTaxFund",
+    selfTaxFund
+);
+
+localStorage.setItem(
+    "kongInvestmentFromTax",
+    investmentFromTax
+);
+
+localStorage.setItem(
+    "kongLuxuryExpenses",
+    JSON.stringify(
+        luxuryExpenses
+    )
+);
+
+    localStorage.setItem(
         "kongIncomes",
         JSON.stringify(
             incomes
