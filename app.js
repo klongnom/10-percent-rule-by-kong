@@ -1839,6 +1839,36 @@ localStorage.setItem(
 // ===============================
 
 function loadData() {
+    if(savedDiscipline !== null){
+
+    disciplineScore =
+        Number(savedDiscipline);
+
+}
+
+
+if(savedSelfTax !== null){
+
+    selfTaxFund =
+        Number(savedSelfTax);
+
+}
+
+
+if(savedInvestmentTax !== null){
+
+    investmentFromTax =
+        Number(savedInvestmentTax);
+
+}
+
+
+if(savedLuxury){
+
+    luxuryExpenses =
+        JSON.parse(savedLuxury);
+
+}
     
     const savedDiscipline =
     localStorage.getItem(
