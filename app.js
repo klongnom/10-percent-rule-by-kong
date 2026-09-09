@@ -1958,6 +1958,7 @@ function loadData() {
         localStorage.getItem(
             "kongSavingHistory"
         );
+    }
 
 
     // =========================
