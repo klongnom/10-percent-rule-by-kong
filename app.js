@@ -1526,12 +1526,19 @@ if (totalIncome > 0) {
             formatMoney(remaining);
     }
 
-    if (investmentFromTaxDisplay) {
+        if (investmentFromTaxDisplay) {
         investmentFromTaxDisplay.textContent =
             formatMoney(
                 investmentFromTax
             );
     }
+
+
+    // =========================
+    // อัปเดตคะแนนวินัยการเงิน
+    // =========================
+
+    updateDisciplineDisplay();
 
 }
 
