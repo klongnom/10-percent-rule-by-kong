@@ -1963,7 +1963,12 @@ localStorage.setItem(
             savingHistory
         )
       );
-    
+        localStorage.setItem(
+        "kongDisciplineHistory",
+        JSON.stringify(
+            disciplineHistory
+        )
+    );
 }
 
  // ===============================
