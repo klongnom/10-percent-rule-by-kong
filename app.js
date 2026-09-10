@@ -2458,3 +2458,5 @@ function updateDisciplineDisplay() {
     }
 
 }
+// เรียกอัปเดตคะแนนบนหน้าจ
+updateDisciplineDisplay();
