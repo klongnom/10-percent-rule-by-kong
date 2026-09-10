@@ -37,6 +37,8 @@ let investmentFromTax = 0;
 
 let luxuryExpenses = [];
 
+let disciplineHistory = [];
+
 
 // เดือนที่กำลังดู
 let currentMonth = getCurrentMonth();
@@ -2460,3 +2462,5 @@ function updateDisciplineDisplay() {
 }
 // เรียกอัปเดตคะแนนบนหน้าจ
 updateDisciplineDisplay();
+
+
