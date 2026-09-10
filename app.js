@@ -2000,7 +2000,10 @@ function loadData() {
         localStorage.getItem(
             "kongLuxuryExpenses"
         );
-
+const savedDisciplineHistory =
+    localStorage.getItem(
+        "kongDisciplineHistory"
+    );
 
     if (savedDiscipline !== null) {
 
@@ -2045,6 +2048,25 @@ function loadData() {
         catch (error) {
 
             luxuryExpenses = [];
+
+        }
+
+    }
+
+
+    if (savedDisciplineHistory) {
+
+        try {
+
+            disciplineHistory =
+                JSON.parse(
+                    savedDisciplineHistory
+                );
+
+        }
+        catch (error) {
+
+            disciplineHistory = [];
 
         }
 
