@@ -358,6 +358,46 @@ function addIncome() {
     });
 
 
+    // ===============================
+    // คะแนนวินัย: บันทึกรายได้
+    // +5 คะแนน / เดือน
+    // ===============================
+
+    const alreadyScoredIncome =
+        disciplineHistory.some(
+            function (item) {
+
+                return (
+                    item.month === currentMonth &&
+                    item.income === true
+                );
+
+            }
+        );
+
+
+    if (!alreadyScoredIncome) {
+
+        disciplineScore =
+            Math.min(
+                100,
+                disciplineScore + 5
+            );
+
+
+        disciplineHistory.push({
+
+            month:
+                currentMonth,
+
+            income:
+                true
+
+        });
+
+    }
+
+
     saveData();
 
     renderIncome();
