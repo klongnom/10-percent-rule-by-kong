@@ -366,7 +366,26 @@ function addIncome() {
             currentMonth
 
     });
+// =========================
+// V4 แบ่งรายรับอัตโนมัติ
+// =========================
 
+const savingMoney =
+    amount * savingPercent / 100;
+
+const investmentMoney =
+    amount * investmentPercent / 100;
+
+const usableMoney =
+    amount -
+    savingMoney -
+    investmentMoney;
+
+savingBalance += savingMoney;
+
+investmentBalance += investmentMoney;
+
+spendingBalance += usableMoney;
 
     // ===============================
     // คะแนนวินัย: บันทึกรายได้
