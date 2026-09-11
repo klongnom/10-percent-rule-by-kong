@@ -13,6 +13,16 @@ let incomes = [];
 
 let expenses = [];
 
+// ===============================
+// V4 กระเป๋าเงิน 3 ใบ
+// ===============================
+
+let savingBalance = 0;
+
+let investmentBalance = 0;
+
+let spendingBalance = 0;
+
 let savingPercent = 10;
 
 let investmentPercent = 5;
