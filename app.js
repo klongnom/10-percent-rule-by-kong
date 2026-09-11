@@ -2069,6 +2069,46 @@ localStorage.setItem(
 function loadData() {
 
     // =========================
+    // V4 โหลดกระเป๋าเงิน 3 ใบ
+    // =========================
+
+    const savedSavingBalance =
+        localStorage.getItem(
+            "kongSavingBalance"
+        );
+
+    const savedInvestmentBalance =
+        localStorage.getItem(
+            "kongInvestmentBalance"
+        );
+
+    const savedSpendingBalance =
+        localStorage.getItem(
+            "kongSpendingBalance"
+        );
+
+    if (savedSavingBalance !== null) {
+        savingBalance =
+            Number(
+                savedSavingBalance
+            );
+    }
+
+    if (savedInvestmentBalance !== null) {
+        investmentBalance =
+            Number(
+                savedInvestmentBalance
+            );
+    }
+
+    if (savedSpendingBalance !== null) {
+        spendingBalance =
+            Number(
+                savedSpendingBalance
+            );
+    }
+
+    // =========================
     // V3.2 โหลดระบบวินัยการเงิน
     // =========================
 
