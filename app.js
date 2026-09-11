@@ -1368,141 +1368,145 @@ const chartRemainLegend =
 
 if (totalIncome > 0) {
 
-    /*
-     * เงินที่สามารถนำไปใช้จ่ายได้จริง
-     * หลังหักเงินออมและเงินลงทุน
-     */
+   /*
+ * เงินที่สามารถนำไปใช้จ่ายได้จริง
+ * หลังหักเงินออมและเงินลงทุน
+ */
 
-    const plannedRemain =
-        Math.max(
-            0,
-            totalIncome - saving - investment
-        );
-
-
-    /*
-     * ป้องกันกราฟใช้จ่ายเกิน 100%
-     */
-
-    const displayExpense =
-        Math.min(
-            Math.max(totalExpense, 0),
-            plannedRemain
-        );
+const plannedRemain =
+    Math.max(
+        0,
+        totalIncome - saving - investment
+    );
 
 
-    /*
-     * เงินที่เหลือสำหรับแสดงบนกราฟ
-     */
+/*
+ * ค่าใช้จ่ายที่นำมาแสดงบนกราฟ
+ * จะไม่เกินเงินที่สามารถใช้ได้
+ */
 
-    const displayRemain =
-        Math.max(
-            0,
-            plannedRemain - displayExpense
-        );
-
-
-    /*
-     * คำนวณเปอร์เซ็นต์
-     */
-
-    const savingWidth =
-        (saving / totalIncome) * 100;
-
-    const investmentWidth =
-        (investment / totalIncome) * 100;
-
-    const expenseWidth =
-        (displayExpense / totalIncome) * 100;
-
-    const remainWidth =
-        (displayRemain / totalIncome) * 100;
+const displayExpense =
+    Math.min(
+        Math.max(totalExpense, 0),
+        plannedRemain
+    );
 
 
-    /*
-     * กำหนดความกว้างหลอด
-     */
+/*
+ * เงินที่เหลือจากงบใช้จ่าย
+ */
 
-    if (chartSaving) {
-        chartSaving.style.width =
-            savingWidth + "%";
-    }
-
-    if (chartInvestment) {
-        chartInvestment.style.width =
-            investmentWidth + "%";
-    }
-
-    if (chartExpense) {
-        chartExpense.style.width =
-            expenseWidth + "%";
-    }
-
-    if (chartRemain) {
-        chartRemain.style.width =
-            remainWidth + "%";
-    }
+const displayRemain =
+    Math.max(
+        0,
+        plannedRemain - displayExpense
+    );
 
 
-    /*
-     * แสดงตัวเลขบนหลอด
-     */
+/*
+ * คำนวณเปอร์เซ็นต์จากรายได้ทั้งหมด
+ */
 
-    if (chartSavingText) {
-        chartSavingText.textContent =
-            Math.round(savingWidth) + "%";
-    }
+const savingWidth =
+    (saving / totalIncome) * 100;
 
-    if (chartInvestmentText) {
-        chartInvestmentText.textContent =
-            Math.round(investmentWidth) + "%";
-    }
+const investmentWidth =
+    (investment / totalIncome) * 100;
 
-    if (chartExpenseText) {
-        chartExpenseText.textContent =
-            Math.round(expenseWidth) + "%";
-    }
+const expenseWidth =
+    (displayExpense / totalIncome) * 100;
 
-    if (chartRemainText) {
-        chartRemainText.textContent =
-            Math.round(remainWidth) + "%";
-    }
+const remainWidth =
+    (displayRemain / totalIncome) * 100;
 
 
-    /*
-     * แสดงรายละเอียดด้านล่าง
-     */
+/*
+ * กำหนดความกว้างหลอดกราฟ
+ */
 
-    if (chartSavingLegend) {
-        chartSavingLegend.textContent =
-            formatMoney(saving) +
-            " (" +
-            savingWidth.toFixed(1) +
-            "%)";
-    }
+if (chartSaving) {
+    chartSaving.style.width =
+        savingWidth + "%";
+}
 
-    if (chartInvestmentLegend) {
-        chartInvestmentLegend.textContent =
-            formatMoney(investment) +
-            " (" +
-            investmentWidth.toFixed(1) +
-            "%)";
-    }
+if (chartInvestment) {
+    chartInvestment.style.width =
+        investmentWidth + "%";
+}
 
-    if (chartExpenseLegend) {
-        chartExpenseLegend.textContent =
-            formatMoney(totalExpense) +
-            " (" +
-            ((totalExpense / totalIncome) * 100).toFixed(1) +
-            "%)";
-    }
+if (chartExpense) {
+    chartExpense.style.width =
+        expenseWidth + "%";
+}
 
-       if (chartRemainLegend) {
-        chartRemainLegend.textContent =
-            "0 บาท (0%)";
-    }
-  }
+if (chartRemain) {
+    chartRemain.style.width =
+        remainWidth + "%";
+}
 
+
+/*
+ * แสดงเปอร์เซ็นต์บนหลอด
+ */
+
+if (chartSavingText) {
+    chartSavingText.textContent =
+        Math.round(savingWidth) + "%";
+}
+
+if (chartInvestmentText) {
+    chartInvestmentText.textContent =
+        Math.round(investmentWidth) + "%";
+}
+
+if (chartExpenseText) {
+    chartExpenseText.textContent =
+        Math.round(expenseWidth) + "%";
+}
+
+if (chartRemainText) {
+    chartRemainText.textContent =
+        Math.round(remainWidth) + "%";
+}
+
+
+/*
+ * แสดงรายละเอียดด้านล่าง
+ */
+
+if (chartSavingLegend) {
+    chartSavingLegend.textContent =
+        formatMoney(saving) +
+        " (" +
+        savingWidth.toFixed(1) +
+        "%)";
+}
+
+if (chartInvestmentLegend) {
+    chartInvestmentLegend.textContent =
+        formatMoney(investment) +
+        " (" +
+        investmentWidth.toFixed(1) +
+        "%)";
+}
+
+if (chartExpenseLegend) {
+    chartExpenseLegend.textContent =
+        formatMoney(displayExpense) +
+        " (" +
+        expenseWidth.toFixed(1) +
+        "%)";
+}
+
+if (chartRemainLegend) {
+    chartRemainLegend.textContent =
+        formatMoney(displayRemain) +
+        " (" +
+        remainWidth.toFixed(1) +
+        "%)";
+}
+
+}
 
     // =========================
     // V3.2 Self Tax Fund Display
