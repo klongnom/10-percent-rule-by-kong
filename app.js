@@ -392,6 +392,7 @@ spendingBalance += usableMoney;
     // +5 คะแนน / เดือน
     // ===============================
 
+
     const alreadyScoredIncome =
         disciplineHistory.some(
             function (item) {
