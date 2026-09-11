@@ -578,7 +578,6 @@ function addExpense() {
             "รายการค่าใช้จ่าย เช่น หนังสือ"
         );
 
-
     if (
         name === null ||
         name.trim() === ""
@@ -594,7 +593,6 @@ function addExpense() {
     let categoryText =
         "เลือกหมวดหมู่โดยพิมพ์หมายเลข\n\n";
 
-
     expenseCategories.forEach(
         function (category, index) {
 
@@ -607,24 +605,19 @@ function addExpense() {
         }
     );
 
-
     let categoryNumber =
         prompt(
             categoryText
         );
 
-
     if (categoryNumber === null) {
         return;
     }
 
-
     let categoryIndex =
         Number(categoryNumber) - 1;
 
-
     let category;
-
 
     if (
         categoryIndex >= 0 &&
@@ -657,15 +650,12 @@ function addExpense() {
             "จำนวนเงิน เช่น 100"
         );
 
-
     if (amountText === null) {
         return;
     }
 
-
     let amount =
         Number(amountText);
-
 
     if (
         isNaN(amount) ||
@@ -699,13 +689,60 @@ function addExpense() {
 
     let selfTax = 0;
 
-
     if (isLuxury) {
 
         selfTax =
             amount * 0.10;
 
     }
+
+
+    // =========================
+    // จำนวนเงินที่ต้องหักจาก
+    // เงินใช้ได้จริง
+    // =========================
+
+    const totalSpend =
+        amount + selfTax;
+
+
+    // =========================
+    // V4
+    // ตรวจสอบเงินใช้ได้ก่อนจ่าย
+    // =========================
+
+    if (
+        totalSpend >
+        spendingBalance
+    ) {
+
+        alert(
+            "เงินใช้ได้ไม่เพียงพอ\n\n" +
+            "ค่าใช้จ่าย: " +
+            formatMoney(amount) +
+            "\n" +
+            "Self Tax: " +
+            formatMoney(selfTax) +
+            "\n" +
+            "ต้องใช้ทั้งหมด: " +
+            formatMoney(totalSpend) +
+            "\n\n" +
+            "เงินใช้ได้คงเหลือ: " +
+            formatMoney(spendingBalance)
+        );
+
+        return;
+    }
+
+
+    // =========================
+    // V4
+    // หักเงินออกจากกระเป๋า
+    // เงินใช้ได้
+    // =========================
+
+    spendingBalance -=
+        totalSpend;
 
 
     // =========================
@@ -738,60 +775,121 @@ function addExpense() {
     });
 
 
-// =========================
-// V3.2
-// เพิ่มเงินเข้า Self Tax Fund
-// และเปลี่ยนเป็นเงินลงทุนเมื่อครบ 500
-// =========================
+    // =========================
+    // V3.2
+    // เพิ่มเงินเข้า Self Tax Fund
+    // และเปลี่ยนเป็นเงินลงทุน
+    // เมื่อครบ 500 บาท
+    // =========================
 
-if (selfTax > 0) {
+    if (selfTax > 0) {
 
-    selfTaxFund +=
-        selfTax;
+        selfTaxFund +=
+            selfTax;
 
-    const investmentBatch =
-        Math.floor(
-            selfTaxFund /
-            selfTaxGoal
-        ) *
-        selfTaxGoal;
+        const investmentBatch =
+            Math.floor(
+                selfTaxFund /
+                selfTaxGoal
+            ) *
+            selfTaxGoal;
+
+
+        if (
+            investmentBatch > 0
+        ) {
+
+            investmentFromTax +=
+                investmentBatch;
+
+            selfTaxFund -=
+                investmentBatch;
+
+
+            // =========================
+            // V4
+            // เงินที่เปลี่ยนจาก Self Tax
+            // เข้าเงินลงทุนสะสม
+            // =========================
+
+            investmentBalance +=
+                investmentBatch;
+
+
+            // =========================
+            // คะแนนวินัย
+            // Self Tax ครบ 500
+            // +10 คะแนน
+            // =========================
+
+            disciplineScore =
+                Math.min(
+                    100,
+                    disciplineScore + 10
+                );
+
+
+            alert(
+                "🎉 คุณสร้างเงินลงทุนสำเร็จ!\n\n" +
+                "เงินลงทุนจาก Self Tax: " +
+                formatMoney(
+                    investmentBatch
+                ) +
+                "\n\n" +
+                "Self Tax Fund เหลือ: " +
+                formatMoney(
+                    selfTaxFund
+                ) +
+                "\n\n" +
+                "คะแนนวินัย: " +
+                disciplineScore +
+                " / 100"
+            );
+
+        }
+
+    }
+
+
+    // =========================
+    // คะแนนวินัย
+    // บันทึกค่าใช้จ่าย +5 / เดือน
+    // =========================
+
+    const alreadyScoredExpense =
+        disciplineHistory.some(
+            function (item) {
+
+                return (
+                    item.month === currentMonth &&
+                    item.expense === true
+                );
+
+            }
+        );
+
 
     if (
-        investmentBatch > 0
+        !alreadyScoredExpense
     ) {
-
-        investmentFromTax +=
-            investmentBatch;
-
-        selfTaxFund -=
-            investmentBatch;
 
         disciplineScore =
             Math.min(
                 100,
-                disciplineScore + 10
+                disciplineScore + 5
             );
 
-        alert(
-            "🎉 คุณสร้างเงินลงทุนสำเร็จ!\n\n" +
-            "เงินลงทุนจาก Self Tax: " +
-            formatMoney(
-                investmentBatch
-            ) +
-            "\n\n" +
-            "Self Tax Fund เหลือ: " +
-            formatMoney(
-                selfTaxFund
-            ) +
-            "\n\n" +
-            "คะแนนวินัย: " +
-            disciplineScore +
-            " / 100"
-        );
+        disciplineHistory.push({
+
+            month:
+                currentMonth,
+
+            expense:
+                true
+
+        });
 
     }
-
-}
 
 
     // =========================
@@ -803,6 +901,8 @@ if (selfTax > 0) {
     renderExpenses();
 
     calculate();
+
+}
 
 
     // =========================
