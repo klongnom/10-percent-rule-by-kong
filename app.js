@@ -240,6 +240,19 @@ function previousMonth() {
 
 function nextMonth() {
 
+    // =========================
+    // ตรวจคะแนนวินัยของเดือนปัจจุบัน
+    // =========================
+
+    checkMonthlyDiscipline(
+        currentMonth
+    );
+
+
+    // =========================
+    // คำนวณเดือนถัดไป
+    // =========================
+
     const parts =
         currentMonth.split("-");
 
@@ -272,6 +285,10 @@ function nextMonth() {
         );
 
 
+    // =========================
+    // แสดงข้อมูลเดือนใหม่
+    // =========================
+
     renderMonth();
 
     renderIncome();
@@ -281,6 +298,7 @@ function nextMonth() {
     calculate();
 
 }
+
 
 
 // ===============================
@@ -2764,28 +2782,6 @@ function updateDisciplineDisplay() {
 function checkMonthlyDiscipline(month) {
 
     // =========================
-    // ตรวจว่าตรวจเดือนนี้ไปแล้วหรือยัง
-    // =========================
-
-    const alreadyScoredBudget =
-        disciplineHistory.some(
-            function (item) {
-
-                return (
-                    item.month === month &&
-                    item.budget === true
-                );
-
-            }
-        );
-
-
-    if (alreadyScoredBudget) {
-        return;
-    }
-
-
-    // =========================
     // รายได้ของเดือนนั้น
     // =========================
 
@@ -2829,6 +2825,16 @@ function checkMonthlyDiscipline(month) {
 
 
     // =========================
+    // ถ้าไม่มีรายได้
+    // ไม่ตรวจคะแนนเดือนนี้
+    // =========================
+
+    if (totalIncome <= 0) {
+        return;
+    }
+
+
+    // =========================
     // คำนวณค่าใช้จ่าย
     // =========================
 
@@ -2844,8 +2850,7 @@ function checkMonthlyDiscipline(month) {
 
 
     // =========================
-    // คำนวณงบใช้จ่าย
-    // หลังหักออม + ลงทุน
+    // คำนวณเงินออม
     // =========================
 
     const saving =
@@ -2854,11 +2859,20 @@ function checkMonthlyDiscipline(month) {
         100;
 
 
+    // =========================
+    // คำนวณเงินลงทุน
+    // =========================
+
     const investment =
         totalIncome *
         investmentPercent /
         100;
 
+
+    // =========================
+    // งบที่สามารถใช้ได้
+    // หลังหักออม + ลงทุน
+    // =========================
 
     const plannedRemain =
         totalIncome -
@@ -2867,12 +2881,25 @@ function checkMonthlyDiscipline(month) {
 
 
     // =========================
-    // ให้คะแนน
-    // ใช้ไม่เกินงบ = +10
+    // ตรวจคะแนนใช้เงินไม่เกินงบ
+    // +10 คะแนน
     // =========================
 
+    const alreadyScoredBudget =
+        disciplineHistory.some(
+            function (item) {
+
+                return (
+                    item.month === month &&
+                    item.budget === true
+                );
+
+            }
+        );
+
+
     if (
-        totalIncome > 0 &&
+        !alreadyScoredBudget &&
         totalExpense <= plannedRemain
     ) {
 
@@ -2893,12 +2920,61 @@ function checkMonthlyDiscipline(month) {
 
         });
 
+    }
 
-        saveData();
+
+    // =========================
+    // ตรวจคะแนนออมตามเป้าหมาย
+    // +10 คะแนน
+    // =========================
+
+    const alreadyScoredSaving =
+        disciplineHistory.some(
+            function (item) {
+
+                return (
+                    item.month === month &&
+                    item.saving === true
+                );
+
+            }
+        );
+
+
+    if (
+        !alreadyScoredSaving &&
+        saving > 0
+    ) {
+
+        disciplineScore =
+            Math.min(
+                100,
+                disciplineScore + 10
+            );
+
+
+        disciplineHistory.push({
+
+            month:
+                month,
+
+            saving:
+                true
+
+        });
 
     }
 
+
+    // =========================
+    // บันทึกข้อมูล
+    // =========================
+
+    saveData();
+
 }
+
+
 // =========================
 // V4 TEST RESET
 // รีเซ็ตข้อมูลทั้งหมด
