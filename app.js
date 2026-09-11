@@ -1972,6 +1972,21 @@ function updateGoal() {
 function saveData() {
 
     localStorage.setItem(
+    "kongSavingBalance",
+    savingBalance
+);
+
+localStorage.setItem(
+    "kongInvestmentBalance",
+    investmentBalance
+);
+
+localStorage.setItem(
+    "kongSpendingBalance",
+    spendingBalance
+);
+
+    localStorage.setItem(
     "kongDisciplineScore",
     disciplineScore
 );
