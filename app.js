@@ -1567,7 +1567,41 @@ if (totalIncome > 0) {
     // อัปเดตคะแนนวินัยการเงิน
     // =========================
 
+    // =========================
+// V4 แสดงยอดกระเป๋าเงิน
+// =========================
+
+const savingBalanceDisplay =
+    document.getElementById(
+        "savingBalanceDisplay"
+    );
+
+if (savingBalanceDisplay) {
+    savingBalanceDisplay.textContent =
+        formatMoney(savingBalance);
+}
+
+const investmentBalanceDisplay =
+    document.getElementById(
+        "investmentBalanceDisplay"
+    );
+
+if (investmentBalanceDisplay) {
+    investmentBalanceDisplay.textContent =
+        formatMoney(investmentBalance);
+}
+
+const spendingBalanceDisplay =
+    document.getElementById(
+        "spendingBalanceDisplay"
+    );
+
+if (spendingBalanceDisplay) {
+    spendingBalanceDisplay.textContent =
+        formatMoney(spendingBalance);
+}
     updateDisciplineDisplay();
+    
 
 }
 
