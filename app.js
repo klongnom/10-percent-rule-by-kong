@@ -902,7 +902,7 @@ function addExpense() {
 
     calculate();
 
-}
+
 
 
     // =========================
