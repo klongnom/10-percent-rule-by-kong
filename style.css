@@ -863,3 +863,15 @@ body {
 .reset-test-btn:active {
     transform: scale(0.98);
 }
+.reset-test-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 12px;
+    background: #ef4444;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
