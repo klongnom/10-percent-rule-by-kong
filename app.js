@@ -2757,4 +2757,41 @@ function updateDisciplineDisplay() {
 
 }
 
+// =========================
+// V4 TEST RESET
+// รีเซ็ตข้อมูลทั้งหมด
+// =========================
 
+function resetTestData() {
+
+    const firstConfirm =
+        confirm(
+            "⚠️ ต้องการรีเซ็ตข้อมูลทั้งหมดหรือไม่?\n\n" +
+            "รายได้ ค่าใช้จ่าย เงินออม เงินลงทุน " +
+            "คะแนนวินัย และข้อมูลทดสอบทั้งหมดจะถูกลบ"
+        );
+
+    if (!firstConfirm) {
+        return;
+    }
+
+
+    const secondConfirm =
+        confirm(
+            "ยืนยันอีกครั้ง\n\n" +
+            "ข้อมูลทั้งหมดจะกลับไปเริ่มจาก 0"
+        );
+
+    if (!secondConfirm) {
+        return;
+    }
+
+
+    // ล้างข้อมูลของระบบ
+    localStorage.clear();
+
+
+    // โหลดหน้าใหม่
+    location.reload();
+
+}
