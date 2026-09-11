@@ -2757,7 +2757,148 @@ function updateDisciplineDisplay() {
     }
 
 }
+// ===============================
+// ระบบตรวจคะแนนวินัยรายเดือน
+// ===============================
 
+function checkMonthlyDiscipline(month) {
+
+    // =========================
+    // ตรวจว่าตรวจเดือนนี้ไปแล้วหรือยัง
+    // =========================
+
+    const alreadyScoredBudget =
+        disciplineHistory.some(
+            function (item) {
+
+                return (
+                    item.month === month &&
+                    item.budget === true
+                );
+
+            }
+        );
+
+
+    if (alreadyScoredBudget) {
+        return;
+    }
+
+
+    // =========================
+    // รายได้ของเดือนนั้น
+    // =========================
+
+    const monthIncomes =
+        incomes.filter(
+            function (income) {
+
+                return income.month === month;
+
+            }
+        );
+
+
+    // =========================
+    // ค่าใช้จ่ายของเดือนนั้น
+    // =========================
+
+    const monthExpenses =
+        expenses.filter(
+            function (expense) {
+
+                return expense.month === month;
+
+            }
+        );
+
+
+    // =========================
+    // คำนวณรายได้
+    // =========================
+
+    const totalIncome =
+        monthIncomes.reduce(
+            function (total, income) {
+
+                return total + income.amount;
+
+            },
+            0
+        );
+
+
+    // =========================
+    // คำนวณค่าใช้จ่าย
+    // =========================
+
+    const totalExpense =
+        monthExpenses.reduce(
+            function (total, expense) {
+
+                return total + expense.amount;
+
+            },
+            0
+        );
+
+
+    // =========================
+    // คำนวณงบใช้จ่าย
+    // หลังหักออม + ลงทุน
+    // =========================
+
+    const saving =
+        totalIncome *
+        savingPercent /
+        100;
+
+
+    const investment =
+        totalIncome *
+        investmentPercent /
+        100;
+
+
+    const plannedRemain =
+        totalIncome -
+        saving -
+        investment;
+
+
+    // =========================
+    // ให้คะแนน
+    // ใช้ไม่เกินงบ = +10
+    // =========================
+
+    if (
+        totalIncome > 0 &&
+        totalExpense <= plannedRemain
+    ) {
+
+        disciplineScore =
+            Math.min(
+                100,
+                disciplineScore + 10
+            );
+
+
+        disciplineHistory.push({
+
+            month:
+                month,
+
+            budget:
+                true
+
+        });
+
+
+        saveData();
+
+    }
+
+}
 // =========================
 // V4 TEST RESET
 // รีเซ็ตข้อมูลทั้งหมด
