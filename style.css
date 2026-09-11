@@ -650,11 +650,33 @@ body {
 
 .dashboard-grid {
     display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+}
+
+.dashboard-grid .dashboard-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,.07);
+    border: 1px solid #e5e7eb;
+}
+
+.dashboard-grid .dashboard-box:nth-child(3) {
+    grid-column: 1 / -1;
+}
+
+.dashboard-grid .dashboard-box span {
+    display: block;
+    color: #64748d;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.dashboard-grid .dashboard-box strong {
+    display: block;
+    font-size: 20px;
+    color: #2e7d32;
 }
 
 
