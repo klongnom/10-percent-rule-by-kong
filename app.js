@@ -2795,3 +2795,13 @@ function resetTestData() {
     location.reload();
 
 }
+function resetTestData() {
+
+    if (!confirm("ต้องการรีเซ็ตข้อมูลทั้งหมดหรือไม่?")) {
+        return;
+    }
+
+    localStorage.clear();
+
+    location.reload();
+}
