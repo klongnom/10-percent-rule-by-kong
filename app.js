@@ -2967,13 +2967,55 @@ function checkMonthlyDiscipline(month) {
 
 
     // =========================
+    // ตรวจคะแนนลงทุนตามเป้าหมาย
+    // +10 คะแนน
+    // =========================
+
+    const alreadyScoredInvestment =
+        disciplineHistory.some(
+            function (item) {
+
+                return (
+                    item.month === month &&
+                    item.investment === true
+                );
+
+            }
+        );
+
+
+    if (
+        !alreadyScoredInvestment &&
+        investment > 0
+    ) {
+
+        disciplineScore =
+            Math.min(
+                100,
+                disciplineScore + 10
+            );
+
+
+        disciplineHistory.push({
+
+            month:
+                month,
+
+            investment:
+                true
+
+        });
+
+    }
+
+
+    // =========================
     // บันทึกข้อมูล
     // =========================
 
     saveData();
 
 }
-
 
 // =========================
 // V4 TEST RESET
