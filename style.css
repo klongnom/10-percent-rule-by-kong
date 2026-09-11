@@ -842,3 +842,24 @@ body {
     font-size: 13px;
     line-height: 1.7;
 }
+
+/* =========================
+   ปุ่มรีเซ็ตข้อมูลทดสอบ
+========================= */
+
+.reset-test-btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 20px;
+    border: 1px solid #ef4444;
+    border-radius: 12px;
+    background: #fff;
+    color: #dc2626;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.reset-test-btn:active {
+    transform: scale(0.98);
+}
