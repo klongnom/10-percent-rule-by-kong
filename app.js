@@ -14,18 +14,80 @@ let incomes = [];
 let expenses = [];
 
 // ===============================
-// V4 กระเป๋าเงิน 3 ใบ
+// V4 ระบบซองเงิน
+// ขั้นต่ำ 3 ซอง / สูงสุด 6 ซอง
 // ===============================
 
-let savingBalance = 0;
+let wallets = [
 
-let investmentBalance = 0;
+    {
+        id: 1,
+        name: "🌱 ออม",
+        percent: 10,
+        balance: 0
+    },
 
-let spendingBalance = 0;
+    {
+        id: 2,
+        name: "📈 ลงทุน",
+        percent: 5,
+        balance: 0
+    },
 
-let savingPercent = 10;
+    {
+        id: 3,
+        name: "💳 ใช้จ่าย",
+        percent: 85,
+        balance: 0
+    }
 
-let investmentPercent = 5;
+];
+
+const MIN_WALLETS = 3;
+
+const MAX_WALLETS = 6;
+
+// ===============================
+// ตรวจสอบเปอร์เซ็นต์ซองเงิน
+// ===============================
+
+function getWalletPercentTotal() {
+
+    return wallets.reduce(
+        function (total, wallet) {
+            return total + Number(wallet.percent || 0);
+        },
+        0
+    );
+
+}
+
+
+function validateWalletPercent() {
+
+    const total = getWalletPercentTotal();
+
+    if (total > 100) {
+
+        alert(
+            "⚠️ เปอร์เซ็นต์ซองเงินรวมเกิน 100%\n\n" +
+            "ตอนนี้รวมเป็น " +
+            total +
+            "%\n\n" +
+            "กรุณาปรับเปอร์เซ็นต์ใหม่"
+        );
+
+        return false;
+    }
+
+    return true;
+
+}
+
+
+// ===============================
+// ระบบเป้าหมายเงินออม
+// ===============================
 
 let savingGoal = 30000;
 
