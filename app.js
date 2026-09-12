@@ -390,88 +390,66 @@ function goToCurrentMonth() {
 
 function addIncome() {
 
-    let name =
-        prompt(
-            "ชื่อแหล่งรายได้ เช่น งานร้านอาหาร"
-        );
+    const name =
+        prompt("รายได้มาจากอะไร?");
 
-
-    if (
-        name === null ||
-        name.trim() === ""
-    ) {
+    if (!name || !name.trim()) {
         return;
     }
 
-
-    let amountText =
-        prompt(
-            "จำนวนเงิน เช่น 4500"
+    const amount =
+        Number(
+            prompt("จำนวนเงิน (บาท)")
         );
 
-
-    if (amountText === null) {
-        return;
-    }
-
-
-    let amount =
-        Number(amountText);
-
-
     if (
-        isNaN(amount) ||
+        !Number.isFinite(amount) ||
         amount <= 0
     ) {
-
-        alert(
-            "กรุณาใส่จำนวนเงินให้ถูกต้อง"
-        );
-
+        alert("กรุณาใส่จำนวนเงินที่ถูกต้อง");
         return;
     }
 
+    // ตรวจสอบเปอร์เซ็นต์ซองเงิน
+    if (!validateWalletPercent()) {
+        return;
+    }
 
+    // บันทึกรายได้
     incomes.push({
 
         id: Date.now(),
 
-        name:
-            name.trim(),
+        name: name.trim(),
 
-        amount:
-            amount,
+        amount: amount,
 
-        month:
-            currentMonth
+        month: currentMonth
 
     });
-// =========================
-// V4 แบ่งรายรับอัตโนมัติ
-// =========================
 
-const savingMoney =
-    amount * savingPercent / 100;
-
-const investmentMoney =
-    amount * investmentPercent / 100;
-
-const usableMoney =
-    amount -
-    savingMoney -
-    investmentMoney;
-
-savingBalance += savingMoney;
-
-investmentBalance += investmentMoney;
-
-spendingBalance += usableMoney;
 
     // ===============================
-    // คะแนนวินัย: บันทึกรายได้
-    // +5 คะแนน / เดือน
+    // แบ่งเงินเข้าซอง
     // ===============================
 
+    wallets.forEach(
+        function (wallet) {
+
+            const money =
+                amount *
+                Number(wallet.percent || 0) /
+                100;
+
+            wallet.balance += money;
+
+        }
+    );
+
+
+    // ===============================
+    // คะแนนวินัย
+    // ===============================
 
     const alreadyScoredIncome =
         disciplineHistory.some(
@@ -494,14 +472,11 @@ spendingBalance += usableMoney;
                 disciplineScore + 5
             );
 
-
         disciplineHistory.push({
 
-            month:
-                currentMonth,
+            month: currentMonth,
 
-            income:
-                true
+            income: true
 
         });
 
